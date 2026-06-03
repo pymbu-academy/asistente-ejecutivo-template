@@ -27,6 +27,7 @@
 - **Tono:** {{FORMAL / CERCANO}}
 - **Nivel de detalle:** {{CORTO Y DIRECTO / DETALLADO}}
 - **Confirmación requerida para:** {{EJ: enviar emails, gastos, publicar contenido}}
+- **Backup en git (subir cambios a la nube):** {{AUTOMÁTICO con aviso / PEDIR CONFIRMACIÓN cada vez}}
 
 ---
 _Mantené este archivo actualizado: si tu situación cambia, avisale al asistente y que lo refleje acá._

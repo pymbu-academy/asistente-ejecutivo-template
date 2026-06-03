@@ -69,8 +69,11 @@ El asistente es más útil cuanto más conectás. Algunas ideas (ver [`Tools/too
 ## 💡 Filosofía
 La base de conocimiento sigue el modelo de [Karpathy para knowledge bases](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): **el humano cura y dirige, el asistente hace el bookkeeping**. Vos decidís qué importa; el asistente mantiene las páginas, los enlaces y el índice al día.
 
+## ☁️ Backup en la nube
+El asistente **respalda su memoria subiéndola a tu repo de git** (con tu autorización). Así, si le pasa algo a tu computadora, no perdés el contexto acumulado: lo recuperás clonando el repo de nuevo. En el onboarding elegís si lo hace automático (con aviso) o pidiéndote confirmación cada vez.
+
 ## 🔒 Privacidad
-Tus datos viven **solo en tu repo** (hacelo privado). Esta plantilla no incluye datos de nadie: es solo la estructura.
+Tus datos viven **solo en tu repo, que debe ser privado**. Como el asistente sube tu información a la nube para respaldarla, asegurate de que el repositorio sea **privado** (al crearlo con "Use this template", elegí *Private*). Esta plantilla no incluye datos de nadie: es solo la estructura.
 
 ---
 _Plantilla open-source. Usala, modificala y hacela tuya._

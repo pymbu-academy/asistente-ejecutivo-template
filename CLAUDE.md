@@ -53,7 +53,8 @@ asistente-ejecutivo/
      - Si **NO está** (el setup pudo fallar por permisos de npm o PATH) → NO sugieras `gws auth` (fallaría). Ofrecé instalarlo vos: `npm install -g @googleworkspace/cli` (con `sudo` si hace falta), y si el binario no aparece en PATH, agregá `$(npm prefix -g)/bin` al PATH. Recién cuando `command -v gws` responda, seguí con el login.
      - Si el alumno **no usa Google** o no quiere conectarlo, está perfecto: el asistente funciona igual con todo lo demás. No insistas.
    - Proponer otras herramientas/skills según sus casos de uso (ver `Tools/tools.md`).
-5. Cerrá creando `Memory/Sessions/session-DDMMYYYY.md` con el resumen del onboarding y actualizá `Memory/index.md`.
+5. **Backup en la nube:** explicá que la memoria se respalda subiéndola a git (ver "Backup en la nube" abajo) y preguntá la preferencia: *"¿Querés que suba los cambios automáticamente (con un aviso), o que te pida confirmación cada vez?"*. Guardá la respuesta en `User/user.md`. Recordá que el repo remoto debe ser **privado**.
+6. Cerrá creando `Memory/Sessions/session-DDMMYYYY.md` con el resumen del onboarding y actualizá `Memory/index.md`. Con autorización, hacé el primer commit + push.
 
 Una vez completado el onboarding, en las siguientes sesiones seguí el flujo normal de abajo.
 
@@ -102,10 +103,25 @@ Este asistente puede **ampliar sus propias capacidades** instalando skills. Tien
 - Mantener el wiki actualizado.
 - Las reglas duras viven en `Memory/rules/`. Releerlas cuando dudes.
 
+## ☁️ Backup en la nube (git) — comportamiento por defecto
+
+Este asistente vive en un repo de git. **Por defecto, subí los cambios a la nube** para que la memoria quede respaldada y no se pierda si pasa algo con la máquina.
+
+**Cuándo subir:** después de cada bloque de trabajo importante y al finalizar la sesión.
+
+**Cómo (siempre con autorización del usuario):**
+1. Antes del primer push de la sesión, **pedí confirmación** una vez: *"¿Subo los cambios al repo (backup en la nube)?"*. Si el usuario ya dejó dicho que sí de antemano (ver preferencia en `User/user.md`), no vuelvas a preguntar cada vez: subí y avisá en una línea.
+2. Con el OK: `git add -A` → `git commit -m "<resumen claro>"` → `git push`.
+3. Si **no hay remoto configurado** (`git remote -v` vacío): avisá al usuario y ofrecé configurarlo (crear el repo en GitHub y `git remote add origin ...`). Hasta entonces, los cambios quedan solo en la máquina.
+
+**🔒 Privacidad (importante):** este repo contiene datos personales/de tu negocio. **El repositorio remoto DEBE ser privado.** Si vas a configurar el remoto o detectás que es público, advertí al usuario antes de subir nada.
+
+**Regla:** nunca pushear sin autorización (la del momento, o la preferencia ya guardada). Pero tampoco dejes la memoria sin respaldar por olvido: si terminás un bloque y no se subió, ofrecé hacerlo.
+
 ## Al finalizar cada sesión
 - Cerrar la sesión del día con su estado.
 - Verificar que `Memory/index.md` está al día.
-- Si usás git con remoto: `git add` + `git commit` + `git push`.
+- **Subir los cambios** (ver "Backup en la nube"): `git add -A` + `git commit` + `git push`, con autorización.
 
 ---
 
