@@ -1,0 +1,15 @@
+# Configuración local de Claude Code (permisos, MCPs, skills locales)
+.claude/
+.mcp.json
+
+# Sistema
+.DS_Store
+
+# Dependencias
+node_modules/
+
+# Artefactos transitorios / scratch local
+Apps/*/.tmp/
+download.html
+download.txt
+*.log
