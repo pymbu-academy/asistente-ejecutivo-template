@@ -46,9 +46,12 @@ asistente-ejecutivo/
    - `Agent/agent.md` → capacidades y workflows según sus casos de uso.
    - `Memory/memory.md` → identidad del proyecto + punteros.
    - Creá las primeras páginas en `Memory/entities/` (ej. su empresa) y `Memory/reference/` que correspondan.
-4. **Herramientas:** esta plantilla ya incluye un set base (Google Workspace `gws` + skills `gws-*` + `pdf`). Si el alumno todavía no corrió el setup, proponéselo:
-   - Correr `bash setup.sh` (instala las skills y el CLI `gws`).
-   - Después, login de Google: `gws auth setup --login` (ver `Tools/gws.md`). La auth es personal y queda en su máquina.
+4. **Herramientas:** esta plantilla ya incluye un set base de skills (Office, marketing, finanzas, `find-skills`) + el CLI de Google Workspace (`gws`). Si el alumno todavía no corrió el setup, proponéselo:
+   - Correr `bash setup.sh` (instala las skills y, opcionalmente, el CLI `gws`).
+   - **Google Workspace es OPCIONAL.** Antes de mandar al alumno a hacer el login, **verificá que gws esté realmente instalado**: corré `command -v gws`.
+     - Si **está** → guialo con `gws auth setup --login` (ver `Tools/gws.md`). La auth es personal y queda en su máquina.
+     - Si **NO está** (el setup pudo fallar por permisos de npm o PATH) → NO sugieras `gws auth` (fallaría). Ofrecé instalarlo vos: `npm install -g @googleworkspace/cli` (con `sudo` si hace falta), y si el binario no aparece en PATH, agregá `$(npm prefix -g)/bin` al PATH. Recién cuando `command -v gws` responda, seguí con el login.
+     - Si el alumno **no usa Google** o no quiere conectarlo, está perfecto: el asistente funciona igual con todo lo demás. No insistas.
    - Proponer otras herramientas/skills según sus casos de uso (ver `Tools/tools.md`).
 5. Cerrá creando `Memory/Sessions/session-DDMMYYYY.md` con el resumen del onboarding y actualizá `Memory/index.md`.
 

@@ -40,31 +40,53 @@ else
 fi
 echo
 
-# 3. Google Workspace CLI (gws)
-azul "▶ Instalando Google Workspace CLI (gws) …"
+# 3. Google Workspace CLI (gws) — OPCIONAL
+azul "▶ Instalando Google Workspace CLI (gws) … (opcional)"
+GWS_OK=0
 if command -v gws >/dev/null 2>&1; then
+  GWS_OK=1
   verde "✓ gws ya está instalado ($(gws --version 2>/dev/null | head -1))"
 else
-  npm install -g @googleworkspace/cli && verde "✓ gws instalado" \
-    || amar "⚠ No se pudo instalar gws global. Probá con sudo: sudo npm install -g @googleworkspace/cli"
+  # set -e está activo: envolvemos en 'if' para que un fallo de npm no aborte el script.
+  if npm install -g @googleworkspace/cli >/tmp/gws-install.log 2>&1; then
+    # Reverificar: instalado ≠ disponible en PATH.
+    if command -v gws >/dev/null 2>&1; then
+      GWS_OK=1
+      verde "✓ gws instalado ($(gws --version 2>/dev/null | head -1))"
+    else
+      amar "⚠ gws se instaló pero NO está en el PATH."
+      amar "  Agregá el bin global de npm a tu PATH. Suele ser:"
+      amar "    export PATH=\"\$(npm prefix -g)/bin:\$PATH\""
+      amar "  Agregalo a tu ~/.zshrc o ~/.bashrc y reabrí la terminal."
+    fi
+  else
+    amar "⚠ No se pudo instalar gws (probablemente permisos de npm global)."
+    amar "  Probá con sudo:   sudo npm install -g @googleworkspace/cli"
+    amar "  O configurá un prefix de npm sin sudo: https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally"
+    amar "  Detalle del error en: /tmp/gws-install.log"
+  fi
 fi
 echo
 
-# 4. Autenticación (cada usuario, con SU cuenta de Google)
-azul "▶ Autenticación de Google Workspace"
-cat <<'TXT'
-  La autenticación es personal: se hace con TU cuenta de Google y queda
-  guardada de forma segura en tu computadora (no se sube al repo).
+# 4. Autenticación (solo si gws quedó disponible)
+if [ "$GWS_OK" = "1" ]; then
+  azul "▶ Google Workspace: falta tu login (personal, con TU cuenta de Google)"
+  cat <<'TXT'
+  La autenticación queda guardada de forma segura en tu computadora (no en el repo).
+  Corré UNO de estos:
 
-  Para autenticarte, corré UNO de estos:
+    gws auth setup --login     # 1ª vez: configura proyecto Google Cloud + login (requiere gcloud)
+    gws auth login             # solo login OAuth (si ya tenés cliente configurado)
 
-    gws auth setup --login     # configura un proyecto de Google Cloud y hace login (recomendado la 1ª vez; requiere gcloud)
-    gws auth login             # solo login OAuth (si ya tenés un proyecto/cliente configurado)
-
-  Verificá con:  gws auth status
-
-  Guía completa de gws:  Tools/gws.md
+  Verificá con:  gws auth status   ·   Guía: Tools/gws.md
 TXT
+else
+  amar "▶ Google Workspace quedó SIN instalar (es opcional)."
+  amar "  El asistente funciona igual: Office (PDF/Word/Excel/PPT), marketing,"
+  amar "  finanzas y find-skills no dependen de gws. Solo te perdés, por ahora,"
+  amar "  las integraciones con Gmail/Drive/Sheets/Calendar."
+  amar "  Cuando quieras, instalá gws (ver arriba) y corré 'gws auth setup --login'."
+fi
 echo
-verde "✓ Setup base completo. Falta solo tu login de Google (paso 4)."
-azul  "  Después, abrí Claude Code en esta carpeta y empezá a trabajar."
+verde "✓ Setup base completo."
+azul  "  Abrí Claude Code en esta carpeta y escribí: \"es mi primera vez\"."
