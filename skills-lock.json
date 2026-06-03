@@ -13,6 +13,12 @@
       "skillPath": "skills/docx/SKILL.md",
       "computedHash": "6962db07127ee540a56e4677f65576d0727668a1d67f7da8bc978f10791c2bfe"
     },
+    "expense-report": {
+      "source": "claude-office-skills/skills",
+      "sourceType": "github",
+      "skillPath": "expense-report/SKILL.md",
+      "computedHash": "202ecc68ece0c00d41304c8b0788e5ee7e8c949ad8e8092bb5c883b09cbbcf6d"
+    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
@@ -138,6 +144,12 @@
       "sourceType": "github",
       "skillPath": "skills/gws-workflow-weekly-digest/SKILL.md",
       "computedHash": "292bcf04593f7980caee1a0392784ca6b653d36be07a991922fbcdfcc1a5fa27"
+    },
+    "invoice-generator": {
+      "source": "claude-office-skills/skills",
+      "sourceType": "github",
+      "skillPath": "invoice-generator/SKILL.md",
+      "computedHash": "447d50f79ab763e1263ea27925a00c7fb5881f592d9ae8b73beb8c4eebd028e0"
     },
     "pdf": {
       "source": "openai/skills",
