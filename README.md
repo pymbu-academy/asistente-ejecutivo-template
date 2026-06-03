@@ -12,6 +12,24 @@ No es un chatbot que olvida todo. Es un asistente con **memoria persistente**: c
 - Que te ayude con **análisis, documentos, finanzas, contenido, organización y automatización**.
 - Que **crezca con vos**: vas sumando herramientas y capacidades sin perder el historial.
 
+## 📋 Antes de empezar (requisitos)
+
+Necesitás tener instalado/creado esto. Todo es gratis:
+
+| Requisito | Para qué | Cómo conseguirlo |
+|-----------|----------|------------------|
+| **Cuenta de GitHub** | Crear tu copia con "Use this template" | [github.com](https://github.com) (registrarte) |
+| **Git** | Clonar tu repo a la computadora | [git-scm.com/downloads](https://git-scm.com/downloads) |
+| **Node.js 18+** | Instalar las skills y el CLI de Google (`setup.sh`) | [nodejs.org](https://nodejs.org) (versión LTS) |
+| **Claude Code** | El asistente en sí | [anthropic.com/claude-code](https://www.anthropic.com/claude-code) |
+
+**Opcional (recomendado):**
+| Requisito | Para qué |
+|-----------|----------|
+| **Cuenta de Google + `gcloud`** | Que el asistente maneje tu Gmail, Drive, Sheets, Calendar (vía `gws`). Si no lo conectás, el asistente igual funciona con todo lo demás. |
+
+> 💡 Si no sabés si tenés Git o Node, abrí una terminal y probá: `git --version` y `node --version`. Si responden con un número, ya los tenés.
+
 ## 🚀 Cómo empezar (5 minutos)
 
 1. **Creá tu copia.** Clic en **"Use this template" → "Create a new repository"** (arriba a la derecha). Vas a tener tu propio repo, limpio y privado.
