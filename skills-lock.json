@@ -163,11 +163,11 @@
       "skillPath": "skills/pptx/SKILL.md",
       "computedHash": "6b8b859d26f93aa059c9870d1ab76b44ab69e3d6757ce4a03cc94cb760888073"
     },
-    "social-content": {
+    "social": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",
-      "skillPath": "skills/social-content/SKILL.md",
-      "computedHash": "755e9cc7e222bc6196972e749a4eaebf97f9827a331a19265f220bbf7e3c234e"
+      "skillPath": "skills/social/SKILL.md",
+      "computedHash": "45f19eb1da07de3505f4db57ea0a83906c73bc30bc6af1fdb4d576d5d2dee310"
     },
     "xlsx": {
       "source": "anthropics/skills",

@@ -21,10 +21,19 @@ fi
 verde "✓ Node.js $(node -v)"
 
 # 2. Skills (capacidades reutilizables) desde skills-lock.json
-azul "▶ Instalando skills (Google Workspace + PDF) en .claude/skills/ …"
+azul "▶ Instalando skills en .claude/skills/ … (puede tardar 1-2 min)"
 if [ -f skills-lock.json ]; then
-  npx --yes skills experimental_install || amar "⚠ Si falló, probá: npx skills experimental_install"
-  verde "✓ Skills instaladas"
+  # experimental_install restaura desde el lock, pero las deja en .agents/skills/
+  npx --yes skills experimental_install || amar "⚠ experimental_install falló; reintentá manualmente."
+  # Claude Code busca las skills en .claude/skills/ → copiarlas ahí.
+  if [ -d .agents/skills ]; then
+    mkdir -p .claude/skills
+    cp -R .agents/skills/. .claude/skills/
+    n=$(find .claude/skills -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ')
+    verde "✓ ${n} skills disponibles en .claude/skills/"
+  else
+    amar "⚠ No se encontró .agents/skills tras la instalación. Revisá el paso de skills."
+  fi
 else
   amar "⚠ No hay skills-lock.json; salto este paso."
 fi
