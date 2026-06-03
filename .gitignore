@@ -2,6 +2,9 @@
 .claude/
 .mcp.json
 
+# Residuo de instalación de skills (el setup.sh las mueve a .claude/skills)
+.agents/
+
 # Sistema
 .DS_Store
 

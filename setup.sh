@@ -25,10 +25,11 @@ azul "▶ Instalando skills en .claude/skills/ … (puede tardar 1-2 min)"
 if [ -f skills-lock.json ]; then
   # experimental_install restaura desde el lock, pero las deja en .agents/skills/
   npx --yes skills experimental_install || amar "⚠ experimental_install falló; reintentá manualmente."
-  # Claude Code busca las skills en .claude/skills/ → copiarlas ahí.
+  # Claude Code busca las skills en .claude/skills/ → moverlas ahí y limpiar .agents/.
   if [ -d .agents/skills ]; then
     mkdir -p .claude/skills
     cp -R .agents/skills/. .claude/skills/
+    rm -rf .agents                      # no dejar residuos: solo .claude/ para Claude Code
     n=$(find .claude/skills -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ')
     verde "✓ ${n} skills disponibles en .claude/skills/"
   else
