@@ -21,7 +21,12 @@ No es un chatbot que olvida todo. Es un asistente con **memoria persistente**: c
    cd TU-REPO
    ```
 3. **Instalá Claude Code** (si no lo tenés): https://www.anthropic.com/claude-code
-4. **Abrí Claude Code en la carpeta** y escribí:
+4. **Instalá las herramientas base** (Google Workspace + skills):
+   ```bash
+   bash setup.sh
+   ```
+   Después, conectá tu Google con `gws auth setup --login` (ver [`Tools/gws.md`](Tools/gws.md)). *Opcional pero recomendado para un asistente ejecutivo.*
+5. **Abrí Claude Code en la carpeta** y escribí:
    > *Hola, es mi primera vez con este asistente.*
 
    El asistente va a **entrevistarte** y configurar todo solo (tu perfil, su personalidad, tu base de conocimiento). No tenés que editar archivos a mano.

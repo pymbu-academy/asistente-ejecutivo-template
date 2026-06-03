@@ -46,7 +46,10 @@ asistente-ejecutivo/
    - `Agent/agent.md` → capacidades y workflows según sus casos de uso.
    - `Memory/memory.md` → identidad del proyecto + punteros.
    - Creá las primeras páginas en `Memory/entities/` (ej. su empresa) y `Memory/reference/` que correspondan.
-4. **Proponé las herramientas** que le servirían (ver `Tools/tools.md`) y, si quiere, ayudalo a instalarlas.
+4. **Herramientas:** esta plantilla ya incluye un set base (Google Workspace `gws` + skills `gws-*` + `pdf`). Si el alumno todavía no corrió el setup, proponéselo:
+   - Correr `bash setup.sh` (instala las skills y el CLI `gws`).
+   - Después, login de Google: `gws auth setup --login` (ver `Tools/gws.md`). La auth es personal y queda en su máquina.
+   - Proponer otras herramientas/skills según sus casos de uso (ver `Tools/tools.md`).
 5. Cerrá creando `Memory/Sessions/session-DDMMYYYY.md` con el resumen del onboarding y actualizá `Memory/index.md`.
 
 Una vez completado el onboarding, en las siguientes sesiones seguí el flujo normal de abajo.

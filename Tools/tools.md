@@ -2,39 +2,39 @@
 
 > Registrá acá cada herramienta/integración que configures. Es lo que define qué puede hacer tu asistente.
 
-## Herramientas configuradas
+## ✅ Incluidas en esta plantilla (corré `bash setup.sh`)
 | Herramienta | Archivo / nota | Estado |
 |-------------|----------------|--------|
-| _(ej. Google Workspace CLI `gws`)_ | — | Pendiente |
-| _(ej. GitHub)_ | — | Pendiente |
+| Google Workspace CLI (`gws`) | [gws.md](gws.md) | Se instala con `setup.sh` · requiere tu login de Google |
+| Skills `gws-*` (20) | Gmail, Drive, Sheets, Calendar, Docs, Tasks, workflows | Se instalan con `setup.sh` (desde `skills-lock.json`) |
+| Skill `pdf` | Crear / leer / revisar PDFs | Se instala con `setup.sh` |
 
-_Agregá filas a medida que sumes herramientas._
+> Tras correr `setup.sh`, completá el login: `gws auth setup --login` (ver `gws.md`).
+
+## Cómo agregar más
+| Herramienta | Archivo / nota | Estado |
+|-------------|----------------|--------|
+| _(ej. GitHub)_ | — | Pendiente |
 
 ---
 
 ## Skills (capacidades reutilizables)
+Las **skills** le dan a tu asistente habilidades específicas. Se instalan en `.claude/skills/` **dentro de este repo** (no global), así viajan con el proyecto. Esta plantilla ya trae un `skills-lock.json` con un set base (Google Workspace + PDF).
 
-Las **skills** son módulos que le dan a tu asistente habilidades específicas (redactar, analizar, generar PDFs, transcribir, etc.). Se instalan en `.claude/skills/` **dentro de este repo** (no global), así viajan con el proyecto.
-
-**Regla:** instalá las skills SIEMPRE en el repo, nunca global.
 ```bash
-npx skills find <query>                            # Buscar skills
-npx skills add owner/repo@skill -a claude-code -y   # Instalar en este repo (.claude/skills/)
-npx skills list                                    # Listar instaladas
+npx skills experimental_install              # restaura las del skills-lock.json (lo hace setup.sh)
+npx skills find <query>                       # buscar más skills
+npx skills add owner/repo@skill -a claude-code -y   # instalar una nueva en este repo
+npx skills list                              # listar instaladas
 ```
-Tras instalar una skill, registrala en la tabla de arriba.
+**Regla:** instalá las skills SIEMPRE en el repo (`-a claude-code`), nunca global. Tras instalar, registrala arriba.
 
-> Catálogo de skills de la comunidad: https://skills.sh
+> Catálogo de la comunidad: https://skills.sh
 
 ---
 
 ## Integraciones por MCP (opcional)
-
-Claude Code puede conectarse a servicios externos vía **MCP** (Model Context Protocol): Google Workspace, Notion, bases de datos, navegador, etc. Cada MCP que conectes amplía lo que el asistente puede hacer. Documentá acá los que actives (qué hacen, con qué cuenta, IDs relevantes).
-
-### Google Workspace (recomendado para asistentes ejecutivos)
-- CLI `gws` (`@googleworkspace/cli`) o el conjunto de skills `gws-*` para Gmail, Drive, Sheets, Calendar, Docs, Tasks.
-- Requiere autenticación OAuth con tu cuenta de Google.
+Claude Code puede conectarse a servicios externos vía **MCP** (Model Context Protocol): Notion, bases de datos, navegador, etc. Documentá acá los que actives (qué hacen, con qué cuenta, IDs relevantes).
 
 ---
 
@@ -42,4 +42,4 @@ Claude Code puede conectarse a servicios externos vía **MCP** (Model Context Pr
 - _(Apps que usás pero que el asistente no controla todavía. Ej: tu CRM, tu banca, etc.)_
 
 ---
-_Última actualización: completar._
+_Última actualización: completar a medida que sumes herramientas._

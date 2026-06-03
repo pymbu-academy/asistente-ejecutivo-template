@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "skills": {
+    "gws-calendar": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-calendar/SKILL.md",
+      "computedHash": "0c5956e1069552444b00bf45381f08ffa9a7bca9810fefb1801866216008bcfc"
+    },
+    "gws-calendar-agenda": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-calendar-agenda/SKILL.md",
+      "computedHash": "794bca1f324fa3a29dd1b98be990c690bcf9e36807fba8634042a36439d26c3e"
+    },
+    "gws-calendar-insert": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-calendar-insert/SKILL.md",
+      "computedHash": "6cfef1caf4117b716e73a5ee4c3ab017bcf72617e9291c2812c052a77281bfbb"
+    },
+    "gws-docs": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-docs/SKILL.md",
+      "computedHash": "10dc2a8aa8cb28524a9d285ddba5602c24c21cbb640718fce522b58d90ee7b97"
+    },
+    "gws-docs-write": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-docs-write/SKILL.md",
+      "computedHash": "fdf46eb60dcdd455a8d8c13dc70cbc855c97063be7d2071cd8c3defee62e60d6"
+    },
+    "gws-drive": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-drive/SKILL.md",
+      "computedHash": "d637ff849b82a9fc195bcfedea260cffe94eaa31b843b28cd04313b1720bb153"
+    },
+    "gws-drive-upload": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-drive-upload/SKILL.md",
+      "computedHash": "0a5cb1978c1eb483bb223363a316dc6a73998b4158c0f4ebcf18882155a57bc8"
+    },
+    "gws-gmail": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-gmail/SKILL.md",
+      "computedHash": "5e5b5fdb4b4f347310d929657ed773abcaf528b5ac0a68deee12d3d38d307642"
+    },
+    "gws-gmail-read": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-gmail-read/SKILL.md",
+      "computedHash": "fb90ad1652e456d953e8d2094bffa955df171e362c7d31590797ec9ca84b3727"
+    },
+    "gws-gmail-reply": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-gmail-reply/SKILL.md",
+      "computedHash": "908f72d3f5a7e9e53f4ecb3cfad6e146a0798aa55ba684629796baddbe5e766a"
+    },
+    "gws-gmail-send": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-gmail-send/SKILL.md",
+      "computedHash": "87f48e0c57b05e143b9e206e9fd17585bcc7bfc3cf16e2bdd889c250e5eb8d34"
+    },
+    "gws-gmail-triage": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-gmail-triage/SKILL.md",
+      "computedHash": "404d060677fd09d2ddb4c4008817b430114a60a97e99cd94cf1308ec9b26db97"
+    },
+    "gws-shared": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-shared/SKILL.md",
+      "computedHash": "b197590681ce3d5a52e9c15a68652b5445d111dbfc0dc453f68fb0785aac443c"
+    },
+    "gws-sheets": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-sheets/SKILL.md",
+      "computedHash": "21c951f8bf399bb941740ab8b048157b43088ad96b743976e88abb0046d263d2"
+    },
+    "gws-sheets-append": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-sheets-append/SKILL.md",
+      "computedHash": "00c79cd5e3f621474220a90f2c9baf5aa5732ef3c0354cdba6b8ff5921bccd36"
+    },
+    "gws-sheets-read": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-sheets-read/SKILL.md",
+      "computedHash": "082f6b6ee503a7438b12338024471f772f90193326cca3b6428e2450879785ff"
+    },
+    "gws-tasks": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-tasks/SKILL.md",
+      "computedHash": "c18db1a0ddecb2c4f1d3999d4021c77da621b51da6e9b4a24783a4ef16859c76"
+    },
+    "gws-workflow-email-to-task": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-workflow-email-to-task/SKILL.md",
+      "computedHash": "24ca7296342b71eed2077154727485e96cb5317f76d20204472bc471131232b2"
+    },
+    "gws-workflow-meeting-prep": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-workflow-meeting-prep/SKILL.md",
+      "computedHash": "72561f3f0f5b1a6de2e6028b232fe2bba9a4d60a97df1012afbf34c5b53c9cf2"
+    },
+    "gws-workflow-weekly-digest": {
+      "source": "googleworkspace/cli",
+      "sourceType": "github",
+      "skillPath": "skills/gws-workflow-weekly-digest/SKILL.md",
+      "computedHash": "292bcf04593f7980caee1a0392784ca6b653d36be07a991922fbcdfcc1a5fa27"
+    },
+    "pdf": {
+      "source": "openai/skills",
+      "sourceType": "github",
+      "skillPath": "skills/.curated/pdf/SKILL.md",
+      "computedHash": "ae0a8fde8447e83a08edd0baf5373cd52febce32494e47e17d5d695a441a1884"
+    }
+  }
+}
