@@ -5,9 +5,12 @@
 ## ✅ Incluidas en esta plantilla (corré `bash setup.sh`)
 | Herramienta | Archivo / nota | Estado |
 |-------------|----------------|--------|
+| **`find-skills`** | Descubre e instala nuevas skills on-demand. El asistente la ofrece cuando una tarea puede mejorar con una skill (ver `CLAUDE.md`). | Se instala con `setup.sh` |
 | Google Workspace CLI (`gws`) | [gws.md](gws.md) | Se instala con `setup.sh` · requiere tu login de Google |
 | Skills `gws-*` (20) | Gmail, Drive, Sheets, Calendar, Docs, Tasks, workflows | Se instalan con `setup.sh` (desde `skills-lock.json`) |
 | Skill `pdf` | Crear / leer / revisar PDFs | Se instala con `setup.sh` |
+
+> 💡 Gracias a **`find-skills`**, no hace falta preinstalar todo: el asistente puede sumar capacidades (Office Word/Excel/PPT, Slack, Notion, facturación, análisis, diseño…) cuando una tarea lo amerita, siempre preguntándote antes.
 
 > Tras correr `setup.sh`, completá el login: `gws auth setup --login` (ver `gws.md`).
 

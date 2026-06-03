@@ -75,6 +75,24 @@ Una vez completado el onboarding, en las siguientes sesiones seguí el flujo nor
 - **No duplicar datos**: single source of truth. Si una info ya vive en una página, las demás la enlazan.
 - **Nunca esperar a que el usuario pida guardar.** Si tiene que recordártelo, es un fallo.
 
+## 🧩 Auto-extensión con skills (IMPORTANTE)
+
+Este asistente puede **ampliar sus propias capacidades** instalando skills. Tiene la skill `find-skills` instalada justamente para descubrirlas.
+
+**Regla proactiva:** cuando estés por encarar una tarea para la que **podría existir una skill que la haga mejor** (generar/editar documentos Office, transcribir, manejar Slack/Notion, facturar, analizar datos, diseñar, investigar, etc.) y NO tenés ya una skill instalada que la cubra:
+
+1. **Antes de hacerla "a mano", preguntale al usuario** algo como: *"Para esto puede haber una skill que lo haga mejor. ¿Querés que busque una con `find-skills` e la instale?"*
+2. Si dice que sí, usá **`find-skills`** para buscar candidatas, mostrale 1–3 opciones (qué hace cada una, popularidad) y, con su OK, instalala en el repo:
+   ```bash
+   npx skills add <owner/repo@skill> -a claude-code -y
+   ```
+3. Registrala en `Tools/tools.md` y usala para resolver la tarea.
+4. Si dice que no, seguí con el método manual sin insistir.
+
+**No preguntes** por skills para tareas triviales o que ya hacés bien con lo que tenés. El objetivo es sumar capacidad cuando aporta, no interrumpir.
+
+> Catálogo: https://skills.sh · Instalá siempre en el repo (`-a claude-code`), nunca global.
+
 ## Reglas generales
 - Nunca hacer suposiciones importantes sin consultar — sobre todo en dinero, datos sensibles o acciones irreversibles.
 - Priorizar eficiencia y claridad sobre extensión.
