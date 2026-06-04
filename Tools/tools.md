@@ -46,20 +46,16 @@ Claude Code puede conectarse a servicios externos vía **MCP** (Model Context Pr
 ### Cómo se reparten las capas
 | Archivo | Qué tiene | ¿Se versiona? |
 |---|---|---|
-| **`.claude/settings.local.json`** (sección `env`) | Tus secretos reales (tokens, API keys) | ❌ No (gitignored) |
-| **`.mcp.json`** | Las conexiones MCP — usan `${VAR}`, **sin tokens** | ❌ No (gitignored) |
+| **`.env`** | Tus credenciales reales (tokens, API keys, secrets) | ❌ No (gitignored) |
+| **`.mcp.json`** | Las conexiones MCP (usan `./mcp-env.sh`) — **sin tokens** | ❌ No (gitignored) |
 | **`Tools/tools.md`** (este archivo) | Qué MCP/herramientas hay y para qué — **sin secretos** | ✅ Sí |
-| `settings.local.example.json` · `.mcp.json.example` | Plantillas con la estructura, sin valores | ✅ Sí |
+| `.env.example` · `.mcp.json.example` · `mcp-env.sh` | Plantillas y helper, sin valores | ✅ Sí |
 
 ### Cómo conectar un MCP nuevo
-1. `cp .mcp.json.example .mcp.json` (si no lo tenés) y dejá los servers que uses.
-2. En `.mcp.json`: agregá el server usando `${MI_TOKEN}` (nunca el token literal).
-3. Poné tu token real en `.claude/settings.local.json` → sección `env` (mirá `settings.local.example.json`):
-   ```json
-   { "env": { "MI_TOKEN": "tu_valor_real" } }
-   ```
-4. Arrancá con **`claude`** normal. Claude Code carga `settings.local.json` solo y resuelve `${MI_TOKEN}` en `.mcp.json`. **Sin wrapper ni pasos extra.**
-5. **Registrá el MCP en la tabla de abajo** (qué hace, con qué cuenta) — sin el token.
+1. `cp .env.example .env` (si no lo tenés). Agregá la variable que pide el servicio y pegá tu token. Ej: `GITHUB_PERSONAL_ACCESS_TOKEN=ghp_...`
+2. `cp .mcp.json.example .mcp.json` (si no lo tenés) y agregá el server, siempre con `"command": "./mcp-env.sh"` + los `args` del server. **Nunca un token.**
+3. Arrancá con **`claude`** normal. El helper `mcp-env.sh` carga tu `.env` y el server toma su token solo. **Sin wrapper ni pasos extra.**
+4. **Registrá el MCP en la tabla de abajo** (qué hace, con qué cuenta) — sin el token.
 
 ### MCP conectados (completá a medida que sumes)
 | MCP | Para qué | Cuenta / nota |

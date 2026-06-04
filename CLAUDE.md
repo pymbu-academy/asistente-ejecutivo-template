@@ -97,25 +97,23 @@ Este asistente puede **ampliar sus propias capacidades** instalando skills. Tien
 
 > Catálogo: https://skills.sh · Instalá siempre en el repo (`-a claude-code`), nunca global.
 
-## 🔐 Secretos y conexiones (MCP) — REGLA DURA
+## 🔐 Secretos y credenciales — REGLA DURA
 
-**Todo es local en este repo. Nada de secretos en git. Se arranca con `claude` normal (sin wrapper).**
+**TODA credencial (token de MCP, API key, secret, contraseña, lo que sea) vive en un único archivo `.env` en la raíz del repo. NADA de secretos en git. El usuario los pone manualmente en su `.env`.**
 
-- **Los secretos (tokens, API keys) viven en `.claude/settings.local.json`**, en la sección `env`. Ej:
-  ```json
-  { "env": { "GITHUB_TOKEN": "ghp_..." } }
-  ```
-  `.claude/` está gitignored → NUNCA se sube. **Claude Code carga este archivo automáticamente** al arrancar, y esas variables llegan a los MCP servers.
-- **Las conexiones MCP se configuran en `.mcp.json`** (local/gitignored). En `.mcp.json` **NUNCA se escribe un token**: se usa `${NOMBRE_VARIABLE}`, que Claude Code expande desde el `env` de arriba. (Soporta `${VAR}` y `${VAR:-default}`.)
-- **`Tools/tools.md` documenta** qué MCP/herramientas hay y para qué sirven — **sin copiar tokens**. Es la capa legible; `settings.local.json` + `.mcp.json` son la capa técnica local.
+- **El `.env` es la única fuente de secretos.** Está gitignored → NUNCA se sube. El usuario lo crea/edita a mano (`cp .env.example .env` y pega sus valores).
+- **El asistente NUNCA escribe el valor de un secreto** en ningún archivo. Cuando una tarea necesita una credencial, el asistente la **toma del `.env`** (lo lee). Si el `.env` no tiene la variable, le **pide al usuario** que la agregue ahí — no la inventa ni la hardcodea en ningún lado.
+- **Para conexiones MCP:** en `.mcp.json` cada server usa `"command": "./mcp-env.sh"` (el helper carga el `.env` y arranca el server, que toma su token solo). El usuario arranca con **`claude` normal**, sin wrapper ni pasos extra. En `.mcp.json` NUNCA va un token.
+- **`Tools/tools.md` documenta** qué MCP/herramientas hay y para qué — **sin copiar secretos**.
 
-**Como asistente, cuando ayudes a conectar una herramienta MCP:**
-1. Agregá el server a `.mcp.json` usando `${VAR}` (nunca el token literal).
-2. Agregá la variable a `.claude/settings.local.json` → `env` — y avisá al usuario que pegue ahí su token.
-3. Registralo en `Tools/tools.md` (qué hace, con qué cuenta) sin el secreto.
-4. **Si por error ves un token en un archivo que se va a versionar, frená y avisá.**
+**Como asistente, cada vez que se necesite una credencial (instalar un MCP, una API key, etc.):**
+1. **Pedile al usuario que agregue la variable a su `.env`** (decile el nombre exacto, ej. `GITHUB_PERSONAL_ACCESS_TOKEN`). El usuario pega el valor a mano.
+2. Para MCP: agregá el server a `.mcp.json` con `"command": "./mcp-env.sh"` + los `args` del server. Sin token.
+3. Para scripts/apps: leé el valor del `.env` en el momento de usarlo. No lo copies a otro archivo.
+4. Registralo en `Tools/tools.md` (qué hace, con qué cuenta) — sin el secreto.
+5. **Si ves un secreto en un archivo que se va a versionar, frená y avisá.**
 
-Las plantillas `settings.local.example.json` y `.mcp.json.example` (versionadas, sin valores) muestran el patrón.
+Las plantillas `.env.example` y `.mcp.json.example` (versionadas, sin valores) muestran el patrón.
 
 ## Reglas generales
 - Nunca hacer suposiciones importantes sin consultar — sobre todo en dinero, datos sensibles o acciones irreversibles.
