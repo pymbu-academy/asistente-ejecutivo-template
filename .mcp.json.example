@@ -2,17 +2,17 @@
   "_comentario": [
     "PLANTILLA de conexiones MCP. Copiala a '.mcp.json' (cp .mcp.json.example .mcp.json) y dejá solo los servers que uses.",
     "REGLA DE ORO: NUNCA escribas un token acá. Los tokens van en el archivo .env.",
-    "Cada server usa './mcp-env.sh' como 'command': ese helper carga tu .env y arranca el server, así toma sus credenciales solo.",
+    "Cada server usa './with-env.sh' como 'command': ese helper carga tu .env y arranca el server, así toma sus credenciales solo.",
     "Vos arrancás con 'claude' normal — no tenés que correr nada especial.",
     "Borrá este bloque _comentario en tu .mcp.json real."
   ],
   "mcpServers": {
     "github": {
-      "command": "./mcp-env.sh",
+      "command": "./with-env.sh",
       "args": ["npx", "-y", "@modelcontextprotocol/server-github"]
     },
     "notion": {
-      "command": "./mcp-env.sh",
+      "command": "./with-env.sh",
       "args": ["npx", "-y", "@notionhq/notion-mcp-server"]
     }
   }

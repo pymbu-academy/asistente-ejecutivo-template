@@ -55,7 +55,7 @@ Necesitás tener instalado/creado esto. Todo es gratis:
 
    El asistente va a **entrevistarte** y configurar todo solo (tu perfil, su personalidad, tu base de conocimiento). No tenés que editar archivos a mano.
 
-   > Tus conexiones MCP toman las credenciales del `.env` solas (vía el helper `mcp-env.sh`). **Arrancás con `claude` normal, sin wrapper ni paso extra.**
+   > Tus conexiones MCP toman las credenciales del `.env` solas (vía el helper `with-env.sh`). **Arrancás con `claude` normal, sin wrapper ni paso extra.**
 
 ## 🧠 Cómo está organizado
 ```

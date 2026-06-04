@@ -99,19 +99,24 @@ Este asistente puede **ampliar sus propias capacidades** instalando skills. Tien
 
 ## 🔐 Secretos y credenciales — REGLA DURA
 
-**TODA credencial (token de MCP, API key, secret, contraseña, lo que sea) vive en un único archivo `.env` en la raíz del repo. NADA de secretos en git. El usuario los pone manualmente en su `.env`.**
+**TODA credencial —token de MCP, API key, secret, contraseña, lo que sea— vive en un único archivo `.env` en la raíz del repo. Es la fuente única de secretos, para CUALQUIER herramienta o script (no solo MCP). NADA de secretos en git. El usuario los pone manualmente en su `.env`.**
 
 - **El `.env` es la única fuente de secretos.** Está gitignored → NUNCA se sube. El usuario lo crea/edita a mano (`cp .env.example .env` y pega sus valores).
-- **El asistente NUNCA escribe el valor de un secreto** en ningún archivo. Cuando una tarea necesita una credencial, el asistente la **toma del `.env`** (lo lee). Si el `.env` no tiene la variable, le **pide al usuario** que la agregue ahí — no la inventa ni la hardcodea en ningún lado.
-- **Para conexiones MCP:** en `.mcp.json` cada server usa `"command": "./mcp-env.sh"` (el helper carga el `.env` y arranca el server, que toma su token solo). El usuario arranca con **`claude` normal**, sin wrapper ni pasos extra. En `.mcp.json` NUNCA va un token.
-- **`Tools/tools.md` documenta** qué MCP/herramientas hay y para qué — **sin copiar secretos**.
+- **El asistente NUNCA escribe el valor de un secreto** en ningún archivo. Cuando una tarea necesita una credencial, la **toma del `.env`**. Si falta, le **pide al usuario** que la agregue ahí — no la inventa ni la hardcodea.
+- **El helper `with-env.sh`** ejecuta cualquier comando con el `.env` cargado. Se usa para:
+  - **Conexiones MCP:** en `.mcp.json` cada server usa `"command": "./with-env.sh"` + sus `args`. Sin token adentro.
+  - **Scripts/apps con credenciales:** `./with-env.sh python mi_script.py`, `./with-env.sh node app.js`, etc. — el script lee la credencial del entorno (cargado del `.env`).
+- El usuario arranca con **`claude` normal**, sin wrapper ni pasos extra.
+- **`Tools/tools.md` documenta** qué herramientas/credenciales hay y para qué — **sin copiar secretos**.
 
-**Como asistente, cada vez que se necesite una credencial (instalar un MCP, una API key, etc.):**
-1. **Pedile al usuario que agregue la variable a su `.env`** (decile el nombre exacto, ej. `GITHUB_PERSONAL_ACCESS_TOKEN`). El usuario pega el valor a mano.
-2. Para MCP: agregá el server a `.mcp.json` con `"command": "./mcp-env.sh"` + los `args` del server. Sin token.
-3. Para scripts/apps: leé el valor del `.env` en el momento de usarlo. No lo copies a otro archivo.
-4. Registralo en `Tools/tools.md` (qué hace, con qué cuenta) — sin el secreto.
+**Como asistente, cada vez que se necesite una credencial (MCP, una API key para un script, lo que sea):**
+1. **Pedile al usuario que agregue la variable a su `.env`** (decile el nombre exacto, ej. `GITHUB_PERSONAL_ACCESS_TOKEN`, `OPENAI_API_KEY`). El usuario pega el valor a mano.
+2. Para MCP: agregá el server a `.mcp.json` con `"command": "./with-env.sh"` + los `args`. Sin token.
+3. Para correr un script/comando que necesita la credencial: ejecutalo con `./with-env.sh <comando>` (o leé el valor del `.env` en el momento). No copies el secreto a otro archivo.
+4. Registralo en `Tools/tools.md` — sin el secreto.
 5. **Si ves un secreto en un archivo que se va a versionar, frená y avisá.**
+
+> Algunas herramientas tienen su propio mecanismo de auth (ej. Google Workspace `gws` usa login OAuth + keyring, no `.env`). Para esas, seguí su flujo. Pero **cualquier credencial que se maneje por variable de entorno o token va al `.env`.**
 
 Las plantillas `.env.example` y `.mcp.json.example` (versionadas, sin valores) muestran el patrón.
 
