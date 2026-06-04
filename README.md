@@ -46,20 +46,16 @@ Necesitás tener instalado/creado esto. Todo es gratis:
    Después, conectá tu Google con `gws auth setup --login` (ver [`Tools/gws.md`](Tools/gws.md)). *Opcional pero recomendado para un asistente ejecutivo.*
 5. **Configurá tus secretos** *(solo si vas a conectar servicios por MCP — GitHub, Notion, etc.)*:
    ```bash
-   cp .env.example .env          # tus tokens/API keys (NUNCA se sube al repo)
-   cp .mcp.json.example .mcp.json # tus conexiones MCP (usan ${VAR} desde el .env)
+   mkdir -p .claude && cp settings.local.example.json .claude/settings.local.json  # tus tokens (NUNCA se suben)
+   cp .mcp.json.example .mcp.json                                                  # tus conexiones MCP (usan ${VAR})
    ```
-   Completá el `.env` con tus tokens. Ver detalle en [`Tools/tools.md`](Tools/tools.md).
-6. **Arrancá** con el wrapper (carga tu `.env` y abre Claude Code):
-   ```bash
-   ./iniciar.sh
-   ```
-   Y escribí:
+   Pegá tus tokens en `.claude/settings.local.json`. Ver detalle en [`Tools/tools.md`](Tools/tools.md).
+6. **Abrí Claude Code** en la carpeta (con `claude`) y escribí:
    > *Hola, es mi primera vez con este asistente.*
 
    El asistente va a **entrevistarte** y configurar todo solo (tu perfil, su personalidad, tu base de conocimiento). No tenés que editar archivos a mano.
 
-   > Si no usás MCP, podés abrir Claude Code normalmente (`claude`). El `./iniciar.sh` solo hace falta para cargar los secretos del `.env`.
+   > Claude Code carga tus secretos solo (de `settings.local.json`) y los pasa a las conexiones MCP. **No hace falta ningún wrapper ni paso extra.**
 
 ## 🧠 Cómo está organizado
 ```
@@ -86,7 +82,7 @@ El asistente **respalda su memoria subiéndola a tu repo de git** (con tu autori
 
 ## 🔒 Privacidad y secretos
 - Tus datos viven **solo en tu repo, que debe ser privado** (al crearlo con "Use this template", elegí *Private*). El asistente respalda tu información en la nube, así que el repo **tiene que ser privado**.
-- **Tus secretos (tokens, API keys) viven solo en `.env`**, que nunca se sube al repo (está en `.gitignore`). Las conexiones MCP (`.mcp.json`) los referencian con `${VAR}` — jamás se escribe un token en un archivo versionado.
+- **Tus secretos (tokens, API keys) viven solo en `.claude/settings.local.json`**, que nunca se sube al repo (`.claude/` está en `.gitignore`). Las conexiones MCP (`.mcp.json`) los referencian con `${VAR}` — jamás se escribe un token en un archivo versionado.
 - Esta plantilla no incluye datos ni secretos de nadie: es solo la estructura.
 
 ---

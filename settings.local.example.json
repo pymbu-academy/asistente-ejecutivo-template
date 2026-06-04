@@ -1,0 +1,15 @@
+{
+  "_comentario": [
+    "PLANTILLA de configuración local con tus secretos.",
+    "1. Copiala a .claude/settings.local.json   →   mkdir -p .claude && cp settings.local.example.json .claude/settings.local.json",
+    "2. Pegá tus tokens reales en 'env'.",
+    "3. Listo: arrancás con 'claude' normal. Claude Code carga este archivo solo,",
+    "   y las variables de 'env' llegan a las conexiones MCP (.mcp.json usa ${VAR}).",
+    "⚠️ .claude/ está en .gitignore: este archivo con tus secretos NUNCA se sube.",
+    "Borrá este bloque _comentario en tu archivo real."
+  ],
+  "env": {
+    "GITHUB_TOKEN": "pega-aca-tu-token",
+    "NOTION_TOKEN": "pega-aca-tu-token"
+  }
+}

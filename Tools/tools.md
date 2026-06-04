@@ -46,16 +46,19 @@ Claude Code puede conectarse a servicios externos vía **MCP** (Model Context Pr
 ### Cómo se reparten las capas
 | Archivo | Qué tiene | ¿Se versiona? |
 |---|---|---|
-| **`.env`** | Tus secretos reales (tokens, API keys) | ❌ No (gitignored) |
+| **`.claude/settings.local.json`** (sección `env`) | Tus secretos reales (tokens, API keys) | ❌ No (gitignored) |
 | **`.mcp.json`** | Las conexiones MCP — usan `${VAR}`, **sin tokens** | ❌ No (gitignored) |
 | **`Tools/tools.md`** (este archivo) | Qué MCP/herramientas hay y para qué — **sin secretos** | ✅ Sí |
-| `.env.example` · `.mcp.json.example` | Plantillas con la estructura, sin valores | ✅ Sí |
+| `settings.local.example.json` · `.mcp.json.example` | Plantillas con la estructura, sin valores | ✅ Sí |
 
 ### Cómo conectar un MCP nuevo
-1. `cp .env.example .env` y `cp .mcp.json.example .mcp.json` (si no los tenés).
+1. `cp .mcp.json.example .mcp.json` (si no lo tenés) y dejá los servers que uses.
 2. En `.mcp.json`: agregá el server usando `${MI_TOKEN}` (nunca el token literal).
-3. En `.env`: poné `MI_TOKEN=tu_valor_real`.
-4. Arrancá con **`./iniciar.sh`** (carga el `.env` para que el MCP encuentre su token). Claude Code no lee el `.env` solo.
+3. Poné tu token real en `.claude/settings.local.json` → sección `env` (mirá `settings.local.example.json`):
+   ```json
+   { "env": { "MI_TOKEN": "tu_valor_real" } }
+   ```
+4. Arrancá con **`claude`** normal. Claude Code carga `settings.local.json` solo y resuelve `${MI_TOKEN}` en `.mcp.json`. **Sin wrapper ni pasos extra.**
 5. **Registrá el MCP en la tabla de abajo** (qué hace, con qué cuenta) — sin el token.
 
 ### MCP conectados (completá a medida que sumes)

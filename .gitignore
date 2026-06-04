@@ -1,11 +1,11 @@
 # Secretos y configuración local — NUNCA se suben al repo
 # (los comentarios van en su PROPIA línea: un # al lado del patrón rompe el patrón)
-# .env       = tokens, API keys, credenciales (tu fuente de secretos)
-# .mcp.json  = conexiones MCP locales (usan ${VAR} desde .env)
-# .claude/   = permisos, settings.local, skills instaladas
-.env
-.mcp.json
+# .claude/   = permisos + settings.local.json (acá van tus tokens, en 'env') + skills
+# .mcp.json  = conexiones MCP locales (usan ${VAR}, sin tokens)
+# .env       = ignorado por las dudas (el flujo usa settings.local.json, no .env)
 .claude/
+.mcp.json
+.env
 
 # Residuo de instalación de skills (el setup.sh las mueve a .claude/skills)
 .agents/

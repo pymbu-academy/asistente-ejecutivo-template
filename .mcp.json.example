@@ -1,8 +1,8 @@
 {
   "_comentario": [
     "PLANTILLA de conexiones MCP. Copiala a '.mcp.json' (cp .mcp.json.example .mcp.json) y dejá solo los servers que uses.",
-    "REGLA DE ORO: NUNCA escribas tokens acá. Usá ${VAR} y poné el valor real en .env.",
-    "Claude Code expande ${VAR} y ${VAR:-default} desde el entorno (por eso se arranca con ./iniciar.sh, que carga el .env).",
+    "REGLA DE ORO: NUNCA escribas tokens acá. Usá ${VAR}; el valor real va en .claude/settings.local.json (sección 'env').",
+    "Claude Code carga settings.local.json solo y expande ${VAR} / ${VAR:-default} acá. Arrancás con 'claude' normal.",
     "Borrá este bloque _comentario en tu .mcp.json real."
   ],
   "mcpServers": {
