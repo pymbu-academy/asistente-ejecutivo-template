@@ -44,10 +44,22 @@ Necesitás tener instalado/creado esto. Todo es gratis:
    bash setup.sh
    ```
    Después, conectá tu Google con `gws auth setup --login` (ver [`Tools/gws.md`](Tools/gws.md)). *Opcional pero recomendado para un asistente ejecutivo.*
-5. **Abrí Claude Code en la carpeta** y escribí:
+5. **Configurá tus secretos** *(solo si vas a conectar servicios por MCP — GitHub, Notion, etc.)*:
+   ```bash
+   cp .env.example .env          # tus tokens/API keys (NUNCA se sube al repo)
+   cp .mcp.json.example .mcp.json # tus conexiones MCP (usan ${VAR} desde el .env)
+   ```
+   Completá el `.env` con tus tokens. Ver detalle en [`Tools/tools.md`](Tools/tools.md).
+6. **Arrancá** con el wrapper (carga tu `.env` y abre Claude Code):
+   ```bash
+   ./iniciar.sh
+   ```
+   Y escribí:
    > *Hola, es mi primera vez con este asistente.*
 
    El asistente va a **entrevistarte** y configurar todo solo (tu perfil, su personalidad, tu base de conocimiento). No tenés que editar archivos a mano.
+
+   > Si no usás MCP, podés abrir Claude Code normalmente (`claude`). El `./iniciar.sh` solo hace falta para cargar los secretos del `.env`.
 
 ## 🧠 Cómo está organizado
 ```
@@ -72,8 +84,10 @@ La base de conocimiento sigue el modelo de [Karpathy para knowledge bases](https
 ## ☁️ Backup en la nube
 El asistente **respalda su memoria subiéndola a tu repo de git** (con tu autorización). Así, si le pasa algo a tu computadora, no perdés el contexto acumulado: lo recuperás clonando el repo de nuevo. En el onboarding elegís si lo hace automático (con aviso) o pidiéndote confirmación cada vez.
 
-## 🔒 Privacidad
-Tus datos viven **solo en tu repo, que debe ser privado**. Como el asistente sube tu información a la nube para respaldarla, asegurate de que el repositorio sea **privado** (al crearlo con "Use this template", elegí *Private*). Esta plantilla no incluye datos de nadie: es solo la estructura.
+## 🔒 Privacidad y secretos
+- Tus datos viven **solo en tu repo, que debe ser privado** (al crearlo con "Use this template", elegí *Private*). El asistente respalda tu información en la nube, así que el repo **tiene que ser privado**.
+- **Tus secretos (tokens, API keys) viven solo en `.env`**, que nunca se sube al repo (está en `.gitignore`). Las conexiones MCP (`.mcp.json`) los referencian con `${VAR}` — jamás se escribe un token en un archivo versionado.
+- Esta plantilla no incluye datos ni secretos de nadie: es solo la estructura.
 
 ---
 _Plantilla open-source. Usala, modificala y hacela tuya._

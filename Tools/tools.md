@@ -40,7 +40,28 @@ npx skills list                              # listar instaladas
 ---
 
 ## Integraciones por MCP (opcional)
-Claude Code puede conectarse a servicios externos vía **MCP** (Model Context Protocol): Notion, bases de datos, navegador, etc. Documentá acá los que actives (qué hacen, con qué cuenta, IDs relevantes).
+
+Claude Code puede conectarse a servicios externos vía **MCP** (Model Context Protocol): Notion, GitHub, bases de datos, navegador, etc. **Todo se maneja local en este repo; los secretos nunca se versionan.**
+
+### Cómo se reparten las capas
+| Archivo | Qué tiene | ¿Se versiona? |
+|---|---|---|
+| **`.env`** | Tus secretos reales (tokens, API keys) | ❌ No (gitignored) |
+| **`.mcp.json`** | Las conexiones MCP — usan `${VAR}`, **sin tokens** | ❌ No (gitignored) |
+| **`Tools/tools.md`** (este archivo) | Qué MCP/herramientas hay y para qué — **sin secretos** | ✅ Sí |
+| `.env.example` · `.mcp.json.example` | Plantillas con la estructura, sin valores | ✅ Sí |
+
+### Cómo conectar un MCP nuevo
+1. `cp .env.example .env` y `cp .mcp.json.example .mcp.json` (si no los tenés).
+2. En `.mcp.json`: agregá el server usando `${MI_TOKEN}` (nunca el token literal).
+3. En `.env`: poné `MI_TOKEN=tu_valor_real`.
+4. Arrancá con **`./iniciar.sh`** (carga el `.env` para que el MCP encuentre su token). Claude Code no lee el `.env` solo.
+5. **Registrá el MCP en la tabla de abajo** (qué hace, con qué cuenta) — sin el token.
+
+### MCP conectados (completá a medida que sumes)
+| MCP | Para qué | Cuenta / nota |
+|-----|----------|---------------|
+| _(ej. GitHub)_ | gestión de repos, issues, PRs | token en `.env` como `GITHUB_TOKEN` |
 
 ---
 

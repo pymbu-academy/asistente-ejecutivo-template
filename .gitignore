@@ -1,6 +1,11 @@
-# Configuración local de Claude Code (permisos, MCPs, skills locales)
-.claude/
+# Secretos y configuración local — NUNCA se suben al repo
+# (los comentarios van en su PROPIA línea: un # al lado del patrón rompe el patrón)
+# .env       = tokens, API keys, credenciales (tu fuente de secretos)
+# .mcp.json  = conexiones MCP locales (usan ${VAR} desde .env)
+# .claude/   = permisos, settings.local, skills instaladas
+.env
 .mcp.json
+.claude/
 
 # Residuo de instalación de skills (el setup.sh las mueve a .claude/skills)
 .agents/

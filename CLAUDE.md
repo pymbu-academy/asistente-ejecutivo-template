@@ -97,6 +97,23 @@ Este asistente puede **ampliar sus propias capacidades** instalando skills. Tien
 
 > Catálogo: https://skills.sh · Instalá siempre en el repo (`-a claude-code`), nunca global.
 
+## 🔐 Secretos y conexiones (MCP) — REGLA DURA
+
+**Todo es local en este repo. Nada de secretos en git.**
+
+- **Los secretos viven SOLO en `.env`** (tokens, API keys, credenciales). El `.env` está gitignored: NUNCA se sube. Es tu única fuente de secretos.
+- **Las conexiones MCP se configuran en `.mcp.json`** (también local/gitignored). En `.mcp.json` **NUNCA se escribe un token**: se usa `${NOMBRE_VARIABLE}`, que toma el valor del `.env`. (Claude Code expande `${VAR}` y `${VAR:-default}` en `.mcp.json`.)
+- **Se arranca con `./iniciar.sh`** (no con `claude` pelado): ese wrapper carga el `.env` al entorno para que los MCP encuentren sus tokens. Claude Code **no lee el `.env` por sí solo**.
+- **`Tools/tools.md` documenta** qué MCP/herramientas hay y para qué sirven — **sin copiar tokens**. Es la capa legible; el `.env`/`.mcp.json` son la capa técnica local.
+
+**Como asistente, cuando ayudes a conectar una herramienta MCP:**
+1. Agregá el server a `.mcp.json` usando `${VAR}` (nunca el token literal).
+2. Agregá la variable (vacía o con instrucción) a `.env` — y avisá al usuario que ponga ahí su token.
+3. Registralo en `Tools/tools.md` (qué hace, con qué cuenta) sin el secreto.
+4. **Si por error ves un token en un archivo que se va a versionar, frená y avisá.**
+
+Las plantillas `.env.example` y `.mcp.json.example` (esas SÍ versionadas, sin valores) muestran el patrón.
+
 ## Reglas generales
 - Nunca hacer suposiciones importantes sin consultar — sobre todo en dinero, datos sensibles o acciones irreversibles.
 - Priorizar eficiencia y claridad sobre extensión.
