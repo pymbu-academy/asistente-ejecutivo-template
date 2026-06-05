@@ -9,6 +9,7 @@
 | Google Workspace CLI (`gws`) + skills `gws-*` (20) | Gmail, Drive, Sheets, Calendar, Docs, Tasks, workflows | [gws.md](gws.md) · requiere tu login de Google |
 | Office: `pdf` · `docx` · `xlsx` · `pptx` | Crear/leer/editar PDF, Word, Excel y PowerPoint (archivos locales, sin cuentas) | Se instalan con `setup.sh` |
 | Marketing: `copywriting` · `social-content` | Escribir copy persuasivo y crear contenido para redes | Se instalan con `setup.sh` |
+| Escritura: `humanizer` | Saca las señales típicas de escritura de IA para que tus textos suenen humanos. El asistente lo aplica como paso final cuando escribís algo para publicar (posts, emails, copy), preservando tu voz. | Se instala con `setup.sh` |
 | Finanzas: `invoice-generator` · `expense-report` | Facturas profesionales (multi-moneda + impuestos) y control de gastos/recibos | Se instalan con `setup.sh` |
 
 > 💡 Gracias a **`find-skills`**, no hace falta preinstalar todo: el asistente puede sumar el resto de capacidades (Slack, Notion, contabilidad avanzada, análisis de datos, diseño, estrategia de contenido, email marketing…) cuando una tarea lo amerita, siempre preguntándote antes.

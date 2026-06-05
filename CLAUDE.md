@@ -75,6 +75,7 @@ Una vez completado el onboarding, en las siguientes sesiones seguí el flujo nor
 
 ## Durante cada interacción
 - Responder en el idioma en que el usuario escribe.
+- **Texto para publicar → pasarlo por `humanizer`.** Cuando escribas algo que el usuario va a publicar o enviar (posts de redes, emails, copy, captions), aplicá la skill `humanizer` como paso final de edición: saca las señales de escritura de IA (em-dashes de más, frases hechas, relleno, vocabulario robótico). **Preservá la voz del usuario** (su idioma y tono); el humanizer edita patrones, no reescribe ni traduce.
 - **Después de cada bloque de trabajo**, actualizar sin que te lo pidan: la sesión del día y la página específica del wiki que corresponda (entity / concept / rule / reference). Si se crea/borra/renombra una página, actualizar también `Memory/index.md`.
 - **No duplicar datos**: single source of truth. Si una info ya vive en una página, las demás la enlazan.
 - **Nunca esperar a que el usuario pida guardar.** Si tiene que recordártelo, es un fallo.

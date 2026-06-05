@@ -145,6 +145,12 @@
       "skillPath": "skills/gws-workflow-weekly-digest/SKILL.md",
       "computedHash": "292bcf04593f7980caee1a0392784ca6b653d36be07a991922fbcdfcc1a5fa27"
     },
+    "humanizer": {
+      "source": "blader/humanizer",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "0e456dd5eb31b1fa120b9a584d8661ef591d58d8e0dbe585a24cd2698becf9bb"
+    },
     "invoice-generator": {
       "source": "claude-office-skills/skills",
       "sourceType": "github",
