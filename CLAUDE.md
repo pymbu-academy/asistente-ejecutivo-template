@@ -46,6 +46,7 @@ asistente-ejecutivo/
    - `Agent/agent.md` → capacidades y workflows según sus casos de uso.
    - `Memory/memory.md` → identidad del proyecto + punteros.
    - Creá las primeras páginas en `Memory/entities/` (ej. su empresa) y `Memory/reference/` que correspondan.
+   - **Muestra de voz:** pedile 2-3 fragmentos de algo que **haya escrito él** (un post, un email) y guardalos en `Memory/reference/mi-voz.md`. Sirve para que el `humanizer` haga sonar los textos con SU voz, no una genérica. Si no quiere darla ahora, dejá el archivo como está y ofrecelo más adelante.
 4. **Herramientas:** esta plantilla ya incluye un set base de skills (Office, marketing, finanzas, `find-skills`) + el CLI de Google Workspace (`gws`). Si el alumno todavía no corrió el setup, proponéselo:
    - Correr `bash setup.sh` (instala las skills y, opcionalmente, el CLI `gws`).
    - **Google Workspace es OPCIONAL.** Antes de mandar al alumno a hacer el login, **verificá que gws esté realmente instalado**: corré `command -v gws`.
@@ -76,6 +77,7 @@ Una vez completado el onboarding, en las siguientes sesiones seguí el flujo nor
 ## Durante cada interacción
 - Responder en el idioma en que el usuario escribe.
 - **Texto para publicar → pasarlo por `humanizer`.** Cuando escribas algo que el usuario va a publicar o enviar (posts de redes, emails, copy, captions), aplicá la skill `humanizer` como paso final de edición: saca las señales de escritura de IA (em-dashes de más, frases hechas, relleno, vocabulario robótico). **Preservá la voz del usuario** (su idioma y tono); el humanizer edita patrones, no reescribe ni traduce.
+  - **Calibrá con la voz del usuario:** pasale al humanizer la muestra **`Memory/reference/mi-voz.md`** (*"usá mi estilo de Memory/reference/mi-voz.md"*). Si ese archivo está **vacío**, ofrecé capturar la voz: pedile al usuario 2-3 fragmentos de algo que haya escrito y guardalos ahí. Sin muestra, el humanizer usa una voz genérica (no la suya).
 - **Después de cada bloque de trabajo**, actualizar sin que te lo pidan: la sesión del día y la página específica del wiki que corresponda (entity / concept / rule / reference). Si se crea/borra/renombra una página, actualizar también `Memory/index.md`.
 - **No duplicar datos**: single source of truth. Si una info ya vive en una página, las demás la enlazan.
 - **Nunca esperar a que el usuario pida guardar.** Si tiene que recordártelo, es un fallo.

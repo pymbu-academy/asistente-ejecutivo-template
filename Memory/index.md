@@ -22,7 +22,7 @@ _(Reglas operativas imperativas, separadas de los datos.)_
 
 ## Referencia (`reference/`)
 _(Datos estables: IDs, listas, constantes, branding.)_
-- _vacío_
+- [reference/mi-voz.md](reference/mi-voz.md) — Muestra de tu escritura para calibrar la skill `humanizer` (pegá 2-3 fragmentos tuyos).
 
 ---
 _Mantené este catálogo al día: es el mapa del conocimiento del asistente._
