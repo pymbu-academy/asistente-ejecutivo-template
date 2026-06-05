@@ -2,7 +2,7 @@
 
 Plantilla para tener tu **propio asistente ejecutivo** que vive en un repositorio, aprende sobre vos y tu trabajo, y mantiene una base de conocimiento que mejora con el tiempo. Funciona con **[Claude Code](https://www.anthropic.com/claude-code)**.
 
-No es un chatbot que olvida todo. Es un asistente con **memoria persistente**: cada sesión deja registro, y el conocimiento se acumula en un wiki versionado en git.
+No es una sesión común de Claude Code que olvida todo al cerrar. Es un asistente con **memoria persistente**: cada sesión deja registro, y el conocimiento se acumula en un wiki versionado en git.
 
 ---
 
@@ -10,7 +10,18 @@ No es un chatbot que olvida todo. Es un asistente con **memoria persistente**: c
 - Tener un asistente que **conoce tu negocio/profesión** y tu forma de trabajar.
 - Que **recuerde** decisiones, datos y contexto entre sesiones (no arranca de cero cada vez).
 - Que te ayude con **análisis, documentos, finanzas, contenido, organización y automatización**.
+- Que **escriba con tu voz, no como un robot**: incluye un editor (`humanizer`) que saca el tono de IA y aprende tu estilo a partir de muestras tuyas.
 - Que **crezca con vos**: vas sumando herramientas y capacidades sin perder el historial.
+
+## 🧰 Qué trae de fábrica (con `setup.sh`)
+Apenas corrés el setup, tu asistente ya viene con **30 skills** listas:
+- **Google Workspace** (20): Gmail, Drive, Sheets, Calendar, Docs, Tareas y workflows — vía la CLI `gws` (requiere tu login de Google, opcional).
+- **Office** (4): crear/leer/editar **PDF, Word, Excel y PowerPoint** (archivos locales, sin cuentas).
+- **Marketing y escritura** (3): `copywriting`, `social-content` y **`humanizer`** (que tus textos no suenen a IA y suenen a vos).
+- **Finanzas** (2): facturas multi-moneda (`invoice-generator`) y control de gastos (`expense-report`).
+- **`find-skills`**: cuando una tarea puede mejorar con una skill que no tenés, el asistente **te la ofrece y la instala** — no hace falta preinstalar todo.
+
+> Detalle completo y cómo sumar más: [`Tools/tools.md`](Tools/tools.md).
 
 ## 📋 Antes de empezar (requisitos)
 
@@ -53,7 +64,7 @@ Necesitás tener instalado/creado esto. Todo es gratis:
 6. **Abrí Claude Code** en la carpeta (con `claude`) y escribí:
    > *Hola, es mi primera vez con este asistente.*
 
-   El asistente va a **entrevistarte** y configurar todo solo (tu perfil, su personalidad, tu base de conocimiento). No tenés que editar archivos a mano.
+   El asistente va a **entrevistarte** y configurar todo solo (tu perfil, su personalidad, tu base de conocimiento). No tenés que editar archivos a mano. También te va a pedir **un par de muestras de tu escritura** (un post, un email) para que después redacte **con tu voz** — quedan en `Memory/reference/mi-voz.md`.
 
    > Tus conexiones MCP toman las credenciales del `.env` solas (vía el helper `with-env.sh`). **Arrancás con `claude` normal, sin wrapper ni paso extra.**
 
