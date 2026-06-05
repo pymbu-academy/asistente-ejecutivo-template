@@ -10,6 +10,7 @@
 | Office: `pdf` · `docx` · `xlsx` · `pptx` | Crear/leer/editar PDF, Word, Excel y PowerPoint (archivos locales, sin cuentas) | Se instalan con `setup.sh` |
 | Marketing: `copywriting` · `social-content` | Escribir copy persuasivo y crear contenido para redes | Se instalan con `setup.sh` |
 | Escritura: `humanizer` | Saca las señales típicas de escritura de IA para que tus textos suenen humanos. El asistente lo aplica como paso final cuando escribís algo para publicar (posts, emails, copy), preservando tu voz. **Calibra con tu muestra en `Memory/reference/mi-voz.md`** (pegá ahí 2-3 fragmentos tuyos). | Se instala con `setup.sh` |
+| Diseño: `ui-ux-pro-max` | Inteligencia de diseño UI/UX: 50+ estilos, 161 paletas, 57 tipografías y 99 guías de usabilidad/accesibilidad, para 10 stacks (React, Next, Vue, Svelte, Tailwind, shadcn, HTML/CSS, SwiftUI, React Native, Flutter). El asistente la usa al planear/construir/revisar interfaces para que se vean profesionales. | Se instala con `setup.sh` |
 | Finanzas: `invoice-generator` · `expense-report` | Facturas profesionales (multi-moneda + impuestos) y control de gastos/recibos | Se instalan con `setup.sh` |
 
 > 💡 Gracias a **`find-skills`**, no hace falta preinstalar todo: el asistente puede sumar el resto de capacidades (Slack, Notion, contabilidad avanzada, análisis de datos, diseño, estrategia de contenido, email marketing…) cuando una tarea lo amerita, siempre preguntándote antes.

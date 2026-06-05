@@ -14,10 +14,11 @@ No es una sesión común de Claude Code que olvida todo al cerrar. Es un asisten
 - Que **crezca con vos**: vas sumando herramientas y capacidades sin perder el historial.
 
 ## 🧰 Qué trae de fábrica (con `setup.sh`)
-Apenas corrés el setup, tu asistente ya viene con **30 skills** listas:
+Apenas corrés el setup, tu asistente ya viene con **31 skills** listas:
 - **Google Workspace** (20): Gmail, Drive, Sheets, Calendar, Docs, Tareas y workflows — vía la CLI `gws` (requiere tu login de Google, opcional).
 - **Office** (4): crear/leer/editar **PDF, Word, Excel y PowerPoint** (archivos locales, sin cuentas).
 - **Marketing y escritura** (3): `copywriting`, `social-content` y **`humanizer`** (que tus textos no suenen a IA y suenen a vos).
+- **Diseño UI/UX** (1): **`ui-ux-pro-max`** — estilos, paletas, tipografías y guías de UX/accesibilidad para que lo que construyas (webs, dashboards, apps) se vea profesional en React, Next, Vue, Tailwind, HTML/CSS y más.
 - **Finanzas** (2): facturas multi-moneda (`invoice-generator`) y control de gastos (`expense-report`).
 - **`find-skills`**: cuando una tarea puede mejorar con una skill que no tenés, el asistente **te la ofrece y la instala** — no hace falta preinstalar todo.
 
