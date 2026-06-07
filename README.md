@@ -11,7 +11,7 @@ No es una sesión común de Claude Code que olvida todo al cerrar. Es un asisten
 - Que **recuerde** decisiones, datos y contexto entre sesiones (no arranca de cero cada vez).
 - Que te ayude con **análisis, documentos, finanzas, contenido, organización y automatización**.
 - Que **escriba con tu voz, no como un robot**: incluye un editor (`humanizer`) que saca el tono de IA y aprende tu estilo a partir de muestras tuyas.
-- Que **crezca con vos**: vas sumando herramientas y capacidades sin perder el historial.
+- Que **crezca con vos**: suma herramientas cuando hacen falta y **crea las suyas** para los procesos que repetís, sin perder el historial.
 
 ## 🧰 Qué trae de fábrica (con `setup.sh`)
 Apenas corrés el setup, tu asistente ya viene con **31 skills** listas:
@@ -20,7 +20,9 @@ Apenas corrés el setup, tu asistente ya viene con **31 skills** listas:
 - **Marketing y escritura** (3): `copywriting`, `social-content` y **`humanizer`** (que tus textos no suenen a IA y suenen a vos).
 - **Diseño UI/UX** (1): **`ui-ux-pro-max`** — estilos, paletas, tipografías y guías de UX/accesibilidad para que lo que construyas (webs, dashboards, apps) se vea profesional en React, Next, Vue, Tailwind, HTML/CSS y más.
 - **Finanzas** (2): facturas multi-moneda (`invoice-generator`) y control de gastos (`expense-report`).
-- **`find-skills`**: cuando una tarea puede mejorar con una skill que no tenés, el asistente **te la ofrece y la instala** — no hace falta preinstalar todo.
+- **Se amplía solo (2 formas):**
+  - **`find-skills`** — cuando una tarea puede mejorar con una skill que ya existe, **te la ofrece y la instala** (no hace falta preinstalar todo).
+  - **`skill-creator`** — cuando un proceso **siempre se hace igual**, el asistente lo **encapsula como una skill propia y reutilizable**, así no lo rehace a mano cada vez.
 
 > Detalle completo y cómo sumar más: [`Tools/tools.md`](Tools/tools.md).
 
