@@ -99,6 +99,8 @@ Este asistente puede **ampliar sus propias capacidades** instalando skills. Tien
 
 **No preguntes** por skills para tareas triviales o que ya hacés bien con lo que tenés. El objetivo es sumar capacidad cuando aporta, no interrumpir.
 
+**Encapsular procesos repetibles como skills propias.** Cuando una tarea sea un **proceso que siempre se hace igual** (pasos estables, que ya hiciste o vas a hacer ≥2 veces de la misma forma), proponé al usuario encapsularlo como una skill NUESTRA usando **`skill-creator`** (plugin `anthropic-skills`), en vez de rehacerlo a mano cada vez. Diferencia: `find-skills` instala una skill que YA existe; `skill-creator` crea una propia para tu proceso. Confirmá antes de crearla, instalala en el repo (nunca global) y registrala en `Tools/tools.md`. No encapsules tareas únicas, creativas o que varían cada vez.
+
 > Catálogo: https://skills.sh · Instalá siempre en el repo (`-a claude-code`), nunca global.
 
 ## 🔐 Secretos y credenciales — REGLA DURA
