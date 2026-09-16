@@ -1,23 +1,27 @@
 # Secretos y configuración local — NUNCA se suben al repo
 # (los comentarios van en su PROPIA línea: un # al lado del patrón rompe el patrón)
-# .env       = TODAS tus credenciales (tokens, API keys, secrets) — tu fuente de secretos
+# .env       = TODAS tus credenciales (tokens, API keys, secrets)
 # .mcp.json  = conexiones MCP locales (toman los tokens del .env, sin secretos adentro)
-# .claude/   = permisos, settings.local, skills instaladas
 .env
 .mcp.json
-.claude/
 
-# Residuo de instalación de skills (el setup.sh las mueve a .claude/skills)
+# .claude/: se versionan los hooks y su configuración (son parte del asistente).
+# Las skills instaladas y los permisos locales NO: las skills las reinstala setup.sh.
+.claude/*
+!.claude/settings.json
+!.claude/hooks/
+.claude/settings.local.json
+
+# Residuo de instalación de skills (setup.sh las mueve a .claude/skills)
 .agents/
 
-# Sistema
+# Sistema y dependencias
 .DS_Store
-
-# Dependencias
 node_modules/
+__pycache__/
 
-# Artefactos transitorios / scratch local
-Apps/*/.tmp/
+# Artefactos transitorios
+Projects/*/.tmp/
 download.html
 download.txt
 *.log

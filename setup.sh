@@ -20,6 +20,23 @@ if ! command -v node >/dev/null 2>&1; then
 fi
 verde "✓ Node.js $(node -v)"
 
+# 1.b Python 3: lo usan el buscador de la memoria (Tools/kb/kb.py) y el hook de la hora
+if ! command -v python3 >/dev/null 2>&1; then
+  amar "⚠ No se encontró Python 3. En Mac se instala con:  xcode-select --install"
+  amar "  Sin Python, el asistente funciona pero no puede buscar en su memoria."
+else
+  verde "✓ $(python3 --version)"
+fi
+echo
+
+# 1.c Memoria del asistente: enlazarla al repo para que se versione con git
+azul "▶ Enlazando la memoria del asistente al repo…"
+chmod +x .claude/hooks/* Tools/enlazar-memoria.sh with-env.sh 2>/dev/null || true
+bash Tools/enlazar-memoria.sh || amar "⚠ No se pudo enlazar la memoria. Reintentá con: bash Tools/enlazar-memoria.sh"
+if command -v python3 >/dev/null 2>&1; then
+  python3 Tools/kb/kb.py index --write >/dev/null 2>&1 && verde "✓ Índice de la base de conocimiento generado"
+fi
+
 # 2. Skills (capacidades reutilizables) desde skills-lock.json
 azul "▶ Instalando skills en .claude/skills/ … (puede tardar 1-2 min)"
 if [ -f skills-lock.json ]; then

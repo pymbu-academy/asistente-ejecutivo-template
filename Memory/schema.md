@@ -1,79 +1,145 @@
-# SCHEMA.MD — Convenciones de la base de conocimiento
-
-Este archivo define **cómo se organiza y mantiene** el wiki de este repositorio.
-Es la "constitución" del wiki: si vas a crear, mover o renombrar una página, leé primero acá.
-
-Inspirado en el modelo de Karpathy para knowledge bases: 3 capas (raw sources / wiki / schema), un `index.md` que cataloga todo, un log cronológico (`Sessions/`), y un wiki de **páginas-entidad y páginas-concepto cruzadas con wikilinks**.
-
+---
+type: Reference
+title: "Perfil local de OKF v0.2"
+description: "Cómo se organiza y mantiene esta base de conocimiento: el estándar que sigue, los tipos que usa, el presupuesto de contexto y cómo se busca."
+tags: [asistente, okf, memoria]
+aliases: [formato, frontmatter, schema, convenciones del wiki]
+durable: true   # define convenciones, no datos: no caduca
+status: stable
+generated: { by: claude-code, at: 2026-09-16T00:00:00Z }
+sources:
+  - id: okf-spec
+    resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
+    title: Open Knowledge Format (OKF) v0.2
 ---
 
-## 1. Estructura de directorios
+# Perfil local de OKF v0.2
+
+`Memory/` es un **Knowledge Bundle** conforme a
+[Open Knowledge Format v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md).[^okf-spec]
+Este archivo no repite la spec: define las decisiones que OKF deja abiertas.
+
+[^okf-spec]: Open Knowledge Format (OKF) v0.2
+
+## 1. Qué manda
+
+| Tema | Autoridad |
+|---|---|
+| Formato de los documentos, frontmatter, links, `index.md` | la spec de OKF |
+| Qué `type` usamos, qué carpetas, cuándo algo es obsoleto | este archivo |
+| Presupuesto de contexto y cómo se busca | este archivo, §5 y §6 |
+| Proceso de trabajo (git, secretos, idioma) | [../CLAUDE.md](../CLAUDE.md) |
+
+Ante un conflicto con la spec, **gana la spec** y se corrige este archivo.
+
+## 2. Archivos reservados
+
+- **`index.md`** — el mapa del bundle. **Se genera, no se escribe a mano:**
+  `python3 Tools/kb/kb.py index --write`. Hay dos: el de la raíz (se carga al arrancar, agrupado
+  por tema) y `projects/index.md` (las fichas de proyecto, fuera del arranque).
+- **`Sessions/`** — el log de cada día. Es el histórico: se busca con `kb.py find --log`.
+
+Todo otro `.md` es un documento y **debe** llevar frontmatter con `type`.
+
+## 3. Tipos y carpetas
+
+| Carpeta | `type` | Qué va |
+|---|---|---|
+| `entities/` | `Entity` | personas, clientes, empresas, áreas del negocio |
+| `concepts/` | `Concept` | cómo funciona algo: un cálculo, un sistema, un proceso |
+| `rules/` | `Rule` | reglas imperativas ("SIEMPRE", "NUNCA") |
+| `reference/` | `Reference` | hechos estables: branding, IDs, listas, tablas de consulta |
+| `projects/` | `Project` | ficha de cada carpeta de `Projects/` |
+| `Sessions/` | `Session` | log de un día de trabajo |
+
+**Nunca mezclar reglas y datos** en el mismo documento.
+
+## 4. Frontmatter
+
+Obligatorio: `type`. Recomendado siempre: `title`, `description`, `tags`, `aliases`, `status`,
+`generated`. Además, según el caso:
+
+- **`verified: { by: human:<usuario>, at: ... }`** — **sólo** cuando el usuario confirmó el
+  contenido. Nunca de oficio: es la única señal que separa lo que el asistente dedujo de lo que
+  una persona validó. Sin `verified`, el documento es `unverified` y así se lee.
+- **`stale_after`** — en todo documento cuyo dato caduca: precios, saldos, estados, conteos,
+  credenciales. Instante ISO 8601.
+- **`sources`** — cuando el contenido salió de algo consultable (una API, un archivo, una página).
+  `last_modified` de la fuente **sólo si se puede medir**: una fecha inventada rompe el chequeo que
+  la usa.
+- **`resource`** — la URI del activo que la página *describe* (un repo, una planilla, un
+  dashboard). Las reglas y los conceptos abstractos no llevan.
+- **`snapshot_as_of`** — un registro congelado a una fecha de corte. No caduca: su fecha es parte
+  del dato. Excluyente con `stale_after`.
+- **`durable: true`** — este contenido define convenciones y no decae. Se usa poco.
+- **`status: deprecated`** + `deprecation_reason` — para lo que dejó de ser cierto. **No se borra
+  ni se reescribe en prosa**: se marca, conserva sus links y deja de contestar.
+- **Footnotes** — el label es la clave de unión contra `sources[].id`. Dos fuentes no comparten
+  `id`.
+
+Actores en `generated.by` y `verified.by`: `claude-code` (con versión cuando se sabe),
+`human:<usuario>`, `process:<rutina>`.
+
+### Proyectos
+
+Cada carpeta de `Projects/` lleva su ficha en `Memory/projects/` con
+`resource: Projects/<nombre>/`, o el buscador no la encuentra. La ficha es un puntero —qué es,
+dónde está, qué documentos tiene—, no una copia de su documentación.
+
+## 5. Presupuesto de contexto
+
+> **Lo que se carga al iniciar una sesión no supera ~25.000 tokens.**
+
+Entra solo: `CLAUDE.md`, `User/user.md`, `Agent/agent.md`, `Tools/tools.md`, `Memory/index.md`,
+**y dos cosas que el repo no controla**: el índice de la auto-memoria (`Agent/memory/MEMORY.md`) y
+las descripciones de las skills instaladas. `python3 Tools/kb/kb.py budget` mide las siete.
+
+Nada más entra solo. Todo lo demás **se busca**.
+
+## 6. Buscar antes de contestar
+
+```bash
+python3 Tools/kb/kb.py find "<términos>"     # wiki + auto-memoria + fichas de Tools/
+python3 Tools/kb/kb.py find "<t>" --log      # incluye las sesiones
+python3 Tools/kb/kb.py show <ruta>           # una página con su estado de confianza
 ```
-Memory/
-├── memory.md          ← MÍNIMO: identidad del repo + punteros.
-├── index.md           ← Catálogo de TODAS las páginas, 1 línea cada una.
-├── schema.md          ← Este archivo.
-├── Sessions/          ← Log cronológico (1 archivo por día, prefijo parseable).
-├── entities/          ← Páginas-entidad (personas, clientes, áreas, unidades).
-├── concepts/          ← Páginas-concepto (cómo funciona un cálculo/proceso/sistema).
-├── rules/             ← Reglas de operación, separadas de los datos.
-└── reference/         ← Datos de referencia (IDs, listas, constantes, branding).
+
+`find` pondera `aliases` > título > descripción y tags > cuerpo. **Si una búsqueda razonable no
+encuentra una página que existe, la solución es agregarle un `alias`**, no acordarse del nombre del
+archivo.
+
+## 7. Destilación: del log al wiki
+
+1. `Sessions/` es el **log**, no la memoria de largo plazo.
+2. Por cada bloque de trabajo: **¿qué documento del wiki cambia esto?** Si ninguno, queda en el log.
+3. Si un dato vale, se **promueve** a `entities/`, `concepts/`, `rules/` o `reference/`.
+4. **Una sola fuente de verdad**: si un dato ya vive en un documento, los demás lo enlazan.
+5. **Promoción con retiro**: cuando una memoria pasa a regla, la memoria se queda con el *caso* y la
+   regla con el *procedimiento*. Si no, la lección queda escrita dos veces y se desincroniza.
+
+Se mide por bloque, sobre 14 días: el piso es que la mitad de los bloques enlace una página del wiki
+o escriba una memoria (chequeo 11 de `lint`).
+
+## 8. Temas del índice
+
+El `index.md` agrupa por **tema**, no por carpeta: una línea por página crece para siempre en la
+capa que tiene presupuesto. Los temas y sus tags viven en `Tools/kb/temas.json` y se adaptan al
+negocio del usuario. Cada página lleva en `tags` al menos uno de esos tags, o queda en "Sin tema".
+
+## 9. Tamaño de las páginas
+
+Partir una página cuando pasa de **280 líneas** *y* tiene **3 o más secciones sustanciales** sobre
+temas distintos. Una colección de ítems parecidos (entradas por fecha, por cliente) no se parte.
+
+## 10. Mantenimiento
+
+```bash
+python3 Tools/kb/kb.py index --write   # regenerar los índices
+python3 Tools/kb/kb.py lint            # conformancia, vencidas, huérfanas, links rotos, destilación
+python3 Tools/kb/kb.py budget          # costo del arranque
 ```
 
-**Raw sources (NO se modifican desde el wiki):** tus planillas, documentos, sistemas externos, sitios. El wiki los referencia pero no los reescribe.
+## 11. Qué NO es parte del bundle
 
-## 2. Convenciones de archivos
-- **Nombres en kebab-case**, descriptivos. Ej: `mi-empresa.md`, `flujo-de-caja.md`.
-- **Encabezado**: cada página arranca con `# <Título>` + opcional una línea de descripción.
-- **Pie**: cada página termina con `_Actualizado: YYYY-MM-DD_`.
-- **Tamaño objetivo**: <200 líneas por página. Si crece, partir en sub-páginas.
-
-## 3. Cross-references (wikilinks)
-Referenciar otras páginas con paths relativos desde la raíz del wiki:
-```
-Ver detalle en [entities/mi-empresa.md](entities/mi-empresa.md).
-La regla está en [rules/operacion.md](rules/operacion.md).
-```
-**Regla:** toda entidad mencionada en 2+ páginas debe tener su propia página y enlazarse. No repetir datos (single source of truth).
-
-## 4. Qué va en cada carpeta
-- **`entities/`** — una página por cosa concreta (persona, cliente, área). Identidad + estado actual + notas + enlaces a sesiones.
-- **`concepts/`** — una página por cómo funciona algo (un cálculo, un proceso). Definición + cómo se aplica + dónde se materializa.
-- **`rules/`** — reglas **imperativas** ("SIEMPRE X", "NUNCA Y"), separadas de los datos.
-- **`reference/`** — hechos estables tipo lookup-table (IDs, listas, constantes).
-- **`Sessions/`** — un archivo por día. Cada entrada con **prefijo parseable**:
-  ```
-  ## [2026-01-15] feature: configuré el reporte semanal
-  ```
-  Tipos válidos: `ingest`, `feature`, `fix`, `update`, `audit`, `research`, `cleanup`.
-  Las sesiones son el LOG, no la memoria de largo plazo: si un dato es valioso, **promovelo** a entity/concept/rule/reference.
-
-## 5. `memory.md` queda MÍNIMO
-Solo: identidad del proyecto + punteros a `index.md` y páginas críticas + datos muy estables. NO un dump de todo.
-
-## 6. `index.md` — el catálogo
-Lista todas las páginas con 1 línea cada una, agrupadas por carpeta. Se actualiza cada vez que se crea/borra/renombra una página. Es la primera página que se lee al iniciar sesión.
-
-## 7. Workflow de ingestión / actualización
-Cuando se aprende algo nuevo:
-1. Identificar el tipo (entity / concept / rule / reference / session-log).
-2. Si ya hay página, **actualizarla** (no duplicar). Marcar fecha al pie.
-3. Si no hay, **crearla** según las convenciones y agregarla al `index.md`.
-4. Cruzar referencias con wikilinks en ambas direcciones.
-5. Anotar en la sesión del día con el prefijo parseable.
-
-## 8. Lint — chequeos periódicos
-Cada tanto, revisar:
-- **Orphans**: páginas sin enlaces entrantes.
-- **Contradicciones**: misma propiedad con valores distintos en dos páginas.
-- **Claims stale**: datos con fecha vieja que pueden estar desactualizados.
-- **Sesiones huérfanas**: sessions muy cortas que quedaron a medias.
-
-## 9. Reglas duras
-- **NUNCA mezclar reglas y datos** en la misma página. Reglas en `rules/`, datos en `entities/`/`reference/`.
-- **Single source of truth**: un dato vive en una página; las demás lo enlazan.
-- **El humano cura, el asistente mantiene**: el asistente se ocupa del bookkeeping.
-- **Versioná todo**: el wiki es markdown en git.
-
----
-_Adaptá estas convenciones a tu caso, pero mantené la disciplina: es lo que hace que la memoria escale._
+`Agent/memory/` (la auto-memoria) y las fichas de `Tools/` **se buscan con `find`** pero quedan
+fuera de la conformancia OKF y del `index.md`: tienen otro frontmatter, o ninguno.

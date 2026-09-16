@@ -2,7 +2,7 @@
 
 Plantilla para tener tu **propio asistente ejecutivo** que vive en un repositorio, aprende sobre vos y tu trabajo, y mantiene una base de conocimiento que mejora con el tiempo. Funciona con **[Claude Code](https://www.anthropic.com/claude-code)**.
 
-No es una sesión común de Claude Code que olvida todo al cerrar. Es un asistente con **memoria persistente**: cada sesión deja registro, y el conocimiento se acumula en un wiki versionado en git.
+No es una sesión común de Claude Code que olvida todo al cerrar. Es un asistente con **memoria persistente**: cada sesión deja registro, el conocimiento se acumula en un wiki versionado en git, y **la memoria no se degrada cuando crece**: el asistente busca lo que necesita en vez de cargarlo todo.
 
 ---
 
@@ -26,6 +26,15 @@ Apenas corrés el setup, tu asistente ya viene con **31 skills** listas:
 
 > Detalle completo y cómo sumar más: [`Tools/tools.md`](Tools/tools.md).
 
+## 🧠 Una memoria que aguanta el crecimiento
+Un asistente que "lee todo al arrancar" funciona bien la primera semana y empieza a fallar a los tres meses: el contexto se llena, se compacta y se pierde lo importante. Esta plantilla está armada para que eso no pase:
+
+- **Busca, no carga.** Al arrancar lee sólo lo indispensable (con un tope medido de ~25.000 tokens). Todo lo demás lo encuentra con `Tools/kb/kb.py find` antes de contestar.
+- **Sabe qué tan confiable es cada dato.** Cada página dice si la confirmaste vos, si está vencida o si quedó obsoleta — en formato [OKF](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md).
+- **Se revisa sola.** `kb.py lint` detecta páginas vencidas, huérfanas, links rotos y trabajo que quedó sin registrar.
+- **Lo que aprende se versiona.** Los errores que no tiene que repetir y tus preferencias quedan en `Agent/memory/`, dentro del repo.
+- **Hooks que trabajan solos:** sincroniza con GitHub al arrancar, sabe la hora real (no la deduce), te avisa si el trabajo del día no quedó escrito y mantiene su índice de memorias bajo el límite.
+
 ## 📋 Antes de empezar (requisitos)
 
 Necesitás tener instalado/creado esto. Todo es gratis:
@@ -35,6 +44,7 @@ Necesitás tener instalado/creado esto. Todo es gratis:
 | **Cuenta de GitHub** | Crear tu copia con "Use this template" | [github.com](https://github.com) (registrarte) |
 | **Git** | Clonar tu repo a la computadora | [git-scm.com/downloads](https://git-scm.com/downloads) |
 | **Node.js 18+** | Instalar las skills y el CLI de Google (`setup.sh`) | [nodejs.org](https://nodejs.org) (versión LTS) |
+| **Python 3** | El buscador de la memoria y el reloj | En Mac: `xcode-select --install` · [python.org](https://www.python.org/downloads/) |
 | **Claude Code** | El asistente en sí | [anthropic.com/claude-code](https://www.anthropic.com/claude-code) |
 
 **Opcional (recomendado):**
@@ -42,7 +52,9 @@ Necesitás tener instalado/creado esto. Todo es gratis:
 |-----------|----------|
 | **Cuenta de Google + `gcloud`** | Que el asistente maneje tu Gmail, Drive, Sheets, Calendar (vía `gws`). Si no lo conectás, el asistente igual funciona con todo lo demás. |
 
-> 💡 Si no sabés si tenés Git o Node, abrí una terminal y probá: `git --version` y `node --version`. Si responden con un número, ya los tenés.
+> 💡 Si no sabés si los tenés, abrí una terminal y probá: `git --version`, `node --version` y `python3 --version`. Si responden con un número, ya están.
+>
+> Claude Code necesita una cuenta de Claude con un plan que lo incluya. Usala **con tu propia cuenta**: es tu asistente personal.
 
 ## 🚀 Cómo empezar (5 minutos)
 
@@ -53,7 +65,7 @@ Necesitás tener instalado/creado esto. Todo es gratis:
    cd TU-REPO
    ```
 3. **Instalá Claude Code** (si no lo tenés): https://www.anthropic.com/claude-code
-4. **Instalá las herramientas base** (Google Workspace + skills):
+4. **Instalá las herramientas base** (skills, Google Workspace y el enlace de la memoria):
    ```bash
    bash setup.sh
    ```
@@ -71,14 +83,16 @@ Necesitás tener instalado/creado esto. Todo es gratis:
 
    > Tus conexiones MCP toman las credenciales del `.env` solas (vía el helper `with-env.sh`). **Arrancás con `claude` normal, sin wrapper ni paso extra.**
 
-## 🧠 Cómo está organizado
+## 🗂️ Cómo está organizado
 ```
-├── CLAUDE.md     ← Las reglas del asistente (incluye el onboarding)
-├── Agent/        ← Personalidad (soul.md) y capacidades (agent.md)
-├── Tools/        ← Qué herramientas tiene conectadas
-├── User/         ← Tu perfil
-├── Apps/         ← Apps, scripts y automatizaciones que crees
-└── Memory/       ← La base de conocimiento (wiki + log de sesiones)
+├── CLAUDE.md          ← Las reglas del asistente
+├── User/user.md       ← Tu perfil
+├── Agent/agent.md     ← Cómo se comporta
+├── Agent/memory/      ← Lo que aprende (versionado)
+├── Tools/             ← Herramientas conectadas + el buscador (kb/kb.py)
+├── Projects/          ← Apps, scripts, dashboards y material que crees
+├── Memory/            ← La base de conocimiento (wiki + log de sesiones)
+└── .claude/hooks/     ← Lo que corre solo: git pull, hora, guardas
 ```
 Más detalle en [`CLAUDE.md`](CLAUDE.md) y, sobre el wiki, en [`Memory/schema.md`](Memory/schema.md).
 
@@ -89,7 +103,7 @@ El asistente es más útil cuanto más conectás. Algunas ideas (ver [`Tools/too
 - **MCPs** para conectar tus apps (Notion, bases de datos, navegador…).
 
 ## 💡 Filosofía
-La base de conocimiento sigue el modelo de [Karpathy para knowledge bases](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f): **el humano cura y dirige, el asistente hace el bookkeeping**. Vos decidís qué importa; el asistente mantiene las páginas, los enlaces y el índice al día.
+**Vos decidís qué importa; el asistente hace el mantenimiento**: páginas, enlaces, índice y registro. La idea de partida es el [modelo de Karpathy para knowledge bases](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f); lo que se le sumó es lo que hace falta cuando la base crece: buscar en vez de cargar, marcar qué dato confirmaste vos y cuál venció, y chequeos que avisan antes de que la memoria se degrade.
 
 ## ☁️ Backup en la nube
 El asistente **respalda su memoria subiéndola a tu repo de git** (con tu autorización). Así, si le pasa algo a tu computadora, no perdés el contexto acumulado: lo recuperás clonando el repo de nuevo. En el onboarding elegís si lo hace automático (con aviso) o pidiéndote confirmación cada vez.

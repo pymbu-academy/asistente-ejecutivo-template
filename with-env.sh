@@ -4,15 +4,17 @@
 #
 #  Sirve para cualquier cosa que necesite secretos del .env:
 #   - Conexiones MCP (cada server del .mcp.json lo usa como "command").
-#   - Scripts o apps que corras y necesiten una API key, token, etc.
+#   - Scripts o apps que necesiten una API key, token, etc.
 #       Ej:  ./with-env.sh python mi_script.py
 #            ./with-env.sh node app.js
 #
-#  Carga el .env, expande ${VAR} en los argumentos, y ejecuta el comando.
-#  Así Claude Code funciona con 'claude' normal, sin wrapper de arranque.
+#  Carga el .env de la RAÍZ DEL REPO (no el de la carpeta desde donde lo llames: si lo corrés
+#  desde una subcarpeta, un .env relativo no se encontraría y las variables llegarían vacías,
+#  que se ve igual que una credencial vencida). Expande ${VAR} en los argumentos y ejecuta.
 # ─────────────────────────────────────────────────────────────
+RAIZ="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 set -a
-[ -f .env ] && . ./.env      # carga TODAS tus credenciales del .env
+[ -f "$RAIZ/.env" ] && . "$RAIZ/.env"
 set +a
 
 # Expande ${VAR} dentro de un string usando las vars ya cargadas (bash puro).

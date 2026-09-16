@@ -1,3 +1,13 @@
+---
+type: Reference
+title: "Mi voz — muestra de escritura para humanizer"
+description: "Fragmentos escritos por el usuario para que los textos que redacta el asistente suenen a él y no a una IA."
+tags: [contenido, voz]
+aliases: [mi voz, muestra de voz, como escribo, estilo de escritura]
+status: stable
+generated: { by: claude-code, at: 2026-09-16T00:00:00Z }
+---
+
 # Mi voz — muestra de referencia para `humanizer`
 
 **Para qué sirve:** la skill `humanizer` saca las señales de escritura de IA de tus textos. Para que además **suenen a vos** (y no a una voz "humana" genérica), necesita una **muestra de cómo escribís**. Este archivo ES esa muestra. Cuando el asistente humanice algo tuyo, le pasa esta referencia: *"usá mi estilo de Memory/reference/mi-voz.md"*.

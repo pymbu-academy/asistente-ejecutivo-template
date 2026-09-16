@@ -7,7 +7,7 @@
 - **Nombre:** {{NOMBRE}}
 - **Rol / título:** {{ROL}}
 - **A qué me dedico:** {{PROFESION_O_EMPRESA}}
-- **Ubicación / zona horaria:** {{UBICACION}}
+- **Ubicación:** {{UBICACION}}  ·  la hora la toma el asistente de tu computadora
 
 ## Mi trabajo / empresa
 - **Qué hago:** {{DESCRIPCION_NEGOCIO}}

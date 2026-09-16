@@ -1,0 +1,14 @@
+[
+  {"nombre": "Plata", "tags": ["finanzas", "precios", "pricing", "facturacion", "costos", "cobros", "impuestos"],
+   "descripcion": "cuánto entra, cuánto sale, a qué precio y con qué margen"},
+  {"nombre": "El negocio", "tags": ["negocio", "oferta", "productos", "servicios", "ventas", "clientes", "marketing"],
+   "descripcion": "qué se vende, a quién, y cómo se entrega"},
+  {"nombre": "Contenido", "tags": ["contenido", "redes", "video", "blog", "email", "branding", "voz"],
+   "descripcion": "qué se publica, en qué formato y con qué voz"},
+  {"nombre": "Herramientas y automatización", "tags": ["herramientas", "automatizacion", "integraciones", "mcp", "apis", "plataforma"],
+   "descripcion": "las herramientas conectadas: cómo están armadas y qué las rompe"},
+  {"nombre": "Personas", "tags": ["personas", "equipo", "proveedores", "contactos"],
+   "descripcion": "equipo, proveedores y contactos"},
+  {"nombre": "El asistente", "tags": ["asistente", "memoria", "contexto", "git", "okf", "skills", "sesion"],
+   "descripcion": "cómo trabaja el asistente: memoria, contexto, reglas de operación, git"}
+]
