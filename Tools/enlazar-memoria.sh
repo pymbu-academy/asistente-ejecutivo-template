@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Enlaza la auto-memoria de Claude Code a Agent/memory/ para que se VERSIONE.
+# Sólo hace falta con Claude Code: con Codex las memorias se escriben directo en Agent/memory/.
 #
 # Claude Code guarda lo que el asistente aprende en ~/.claude/projects/<ruta-del-repo>/memory.
 # Esa carpeta es de la computadora, no del repo: sin este enlace, lo aprendido no viaja con

@@ -20,7 +20,7 @@ import datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 MEM = os.path.join(ROOT, "Memory")
-# La auto-memoria de Claude Code. Tiene la FORMA de OKF (índice + fichas + links [[ ]]) pero
+# La memoria del asistente (Claude Code la escribe sola; en Codex se escribe por instrucción). Tiene la FORMA de OKF (índice + fichas + links [[ ]]) pero
 # otro frontmatter (`name`/`description`/`metadata.type`), así que se indexa para BUSCAR y se
 # deja afuera de la conformancia OKF y del index.md.
 # Sin esto los punteros de MEMORY.md son callejones sin salida: la única forma de llegar a una
@@ -668,13 +668,13 @@ def cmd_lint(args):
                     os.path.dirname(d.rel), m)).replace(os.sep, "/")
             if t in inbound and t != d.rel:
                 inbound[t] += 1
-    # Los enlaces de AFUERA del bundle también cuentan. CLAUDE.md, user.md, agent.md y las
+    # Los enlaces de AFUERA del bundle también cuentan. AGENTS.md, user.md, agent.md y las
     # fichas de Tools/ apuntan a reglas del wiki todo el tiempo, y sin esto una regla enlazada
-    # sólo desde el CLAUDE.md se reportaba como huérfana — que es lo contrario de la verdad:
+    # sólo desde el AGENTS.md se reportaba como huérfana — que es lo contrario de la verdad:
     # es la MÁS leída.
     fuera_re = re.compile(r"Memory/([\w./-]+\.md)")
     externos = [os.path.join(ROOT, x) for x in
-                ("CLAUDE.md", "User/user.md", "Agent/agent.md", "Agent/soul.md")]
+                ("AGENTS.md", "CLAUDE.md", "User/user.md", "Agent/agent.md")]
     for dp, dirs, fs in os.walk(TOOLS):
         dirs[:] = [x for x in dirs if x not in ("__pycache__", "node_modules")]
         externos += [os.path.join(dp, f) for f in fs if f.endswith(".md")]
@@ -685,7 +685,7 @@ def cmd_lint(args):
             if m in inbound:
                 inbound[m] += 1
     # No cuentan como huérfanos: los documentos de la raíz del bundle (son la puerta de
-    # entrada, se llega desde claude.md) ni los deprecated (OKF §5.4: se conservan por los
+    # entrada, se llega desde AGENTS.md) ni los deprecated (OKF §5.4: se conservan por los
     # links y la historia, no se les exige que alguien los siga enlazando).
     # Las fichas de proyecto tampoco: son un INVENTARIO (una por carpeta real en disco),
     # no conocimiento que otra página debería citar. El chequeo 8 garantiza lo inverso —
@@ -755,10 +755,11 @@ def cmd_lint(args):
                       f"Memory/projects/ (invisible para `find`)")
                 problems += 1
 
-    head("9. La auto-memoria vive en el repo")
-    # Los recuerdos del asistente los escribe Claude Code en ~/.claude/projects/<repo>/memory.
-    # Ese path es de la máquina, no del repo: si no está enlazado a Agent/memory, lo aprendido no
-    # se versiona y se pierde con el disco. `bash setup.sh` crea el enlace.
+    head("9. La memoria del asistente vive en el repo")
+    # Claude Code escribe sus memorias en ~/.claude/projects/<repo>/memory. Ese path es de la
+    # máquina, no del repo: si no está enlazado a Agent/memory, lo aprendido no se versiona y se
+    # pierde con el disco. `bash setup.sh` crea el enlace. Con Codex no hace falta: las memorias se
+    # escriben directo en Agent/memory/.
     destino = os.path.join(ROOT, "Agent", "memory")
     clave = re.sub(r"[^A-Za-z0-9]", "-", ROOT)
     esperado = os.path.expanduser(f"~/.claude/projects/{clave}/memory")
@@ -770,13 +771,17 @@ def cmd_lint(args):
             if os.path.islink(cand) and os.path.realpath(cand) == os.path.realpath(destino):
                 enlace = cand
                 break
-    if not enlace:
+    hay_claude = os.path.isdir(os.path.expanduser("~/.claude"))
+    if not enlace and not hay_claude:
+        print(f"  {C['dim']}sin Claude Code en esta máquina: no hay enlace que verificar "
+              f"(con Codex las memorias se escriben directo en Agent/memory/){C['end']}")
+    elif not enlace:
         print(f"  {C['red']}✗{C['end']} la auto-memoria NO está enlazada al repo — lo que "
               f"aprenda el asistente no se versiona. Correr `bash setup.sh` (crea {esperado})")
         problems += 1
-    elif os.path.isdir(destino):
+    if os.path.isdir(destino) and (enlace or not hay_claude):
         n = len([f for f in os.listdir(destino) if f.endswith(".md") and f != "MEMORY.md"])
-        print(f"  {C['grn']}✓{C['end']} enlazada · {n} memorias")
+        print(f"  {C['grn']}✓{C['end']} {'enlazada · ' if enlace else ''}{n} memorias")
         p_idx = os.path.join(destino, "MEMORY.md")
         if os.path.exists(p_idx):
             idx_l = sum(1 for _ in open(p_idx, encoding="utf-8", errors="replace"))
@@ -903,19 +908,23 @@ def cmd_lint(args):
 
 # ---------------------------------------------------------------- budget
 
-# Los archivos que el CLAUDE.md manda leer al arrancar.
-STARTUP = ["CLAUDE.md", "User/user.md", "Agent/agent.md",
+# Lo que entra solo al arrancar: AGENTS.md (CLAUDE.md lo importa) y lo que manda leer.
+STARTUP = ["AGENTS.md", "CLAUDE.md", "User/user.md", "Agent/agent.md",
            "Tools/tools.md", "Memory/index.md"]
 LIMIT_TOK = 25000
 
 
 def _desc_skills(d=None):
-    """Bytes de las descripciones de skills. Claude Code carga el nombre y la descripción de
-    cada skill de `.claude/skills/` en todas las sesiones: son residentes aunque no las pida
-    nadie. Las ANIDADAS (`<subdir>/.claude/skills/`) no: se cargan la primera vez que se lee o
-    edita un archivo de esa subcarpeta."""
+    """Bytes de las descripciones de skills. Claude Code y Codex cargan el nombre y la
+    descripción de cada skill instalada en todas las sesiones: son residentes aunque no las pida
+    nadie. Son las mismas en `.claude/skills/` y `.agents/skills/`, así que se cuentan una vez.
+    Las ANIDADAS (`<subdir>/.claude/skills/`) no: se cargan la primera vez que se lee o edita un
+    archivo de esa subcarpeta."""
     total, cuantas, gordas = 0, 0, []
-    d = d or os.path.join(ROOT, ".claude", "skills")
+    if d is None:
+        d = os.path.join(ROOT, ".claude", "skills")
+        if not os.path.isdir(d):
+            d = os.path.join(ROOT, ".agents", "skills")
     if not os.path.isdir(d):
         return 0, 0, []
     for nom in sorted(os.listdir(d)):
@@ -952,7 +961,7 @@ def _skills_anidadas():
 def cmd_budget(args):
     """Mide TODO lo residente, no sólo los archivos que el repo controla: también el índice de
     la auto-memoria (lo carga el harness) y las descripciones de las skills instaladas (las carga
-    Claude Code). Sin esos dos, el número subestima la carga real a la mitad."""
+    el agente). Sin esos dos, el número subestima la carga real a la mitad."""
     filas, total = [], 0
     print(f"{C['bold']}Costo de contexto del arranque{C['end']}\n")
     for rel in STARTUP:
@@ -962,11 +971,11 @@ def cmd_budget(args):
     idx = os.path.join(AUTOMEM, "MEMORY.md")
     if os.path.exists(idx):
         filas.append((os.path.getsize(idx), "Agent/memory/MEMORY.md",
-                      "lo carga el harness, no el CLAUDE.md"))
+                      "Claude Code lo carga solo; en Codex, AGENTS.md manda leerlo"))
     b_sk, n_sk, gordas = _desc_skills()
     if n_sk:
         filas.append((b_sk, f"descripciones de {n_sk} skills",
-                      "las carga Claude Code en cada sesión"))
+                      "las carga el agente en cada sesión"))
 
     for b, rel, nota in filas:
         total += b
@@ -984,11 +993,11 @@ def cmd_budget(args):
         print(f"\n{C['dim']}  Descripciones de skill por encima de 400 B "
               f"({len(gordas)}), las 5 peores:{C['end']}")
         for b, nom in gordas[:5]:
-            print(f"  {b:9,} B  .claude/skills/{nom}")
+            print(f"  {b:9,} B  skills/{nom}")
 
     anidadas = _skills_anidadas()
     if anidadas:
-        print(f"\n{C['dim']}  Skills ANIDADAS — no entran al arranque; Claude Code las carga la "
+        print(f"\n{C['dim']}  Skills ANIDADAS — no entran al arranque; se cargan la "
               f"primera vez\n  que lee o edita un archivo de esa carpeta:{C['end']}")
         for rel, cuantas, b in anidadas:
             print(f"  {b:9,} B  {cuantas} skills en {rel}")

@@ -2,28 +2,28 @@
   "hooks": {
     "SessionStart": [
       { "matcher": "startup|resume",
-        "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-start-git-pull.sh\"" }] },
+        "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/Tools/hooks/session-start-git-pull.sh\"" }] },
       { "matcher": "startup|resume|clear|compact",
-        "hooks": [{ "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/hora-local.py\"" }] },
+        "hooks": [{ "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/Tools/hooks/hora-local.py\"" }] },
       { "matcher": "startup|resume|clear|compact",
-        "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/memoria-indice.sh\"" }] }
+        "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/Tools/hooks/memoria-indice.sh\"" }] }
     ],
     "UserPromptSubmit": [
-      { "hooks": [{ "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/hora-local.py\"" }] }
+      { "hooks": [{ "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/Tools/hooks/hora-local.py\"" }] }
     ],
     "PreToolUse": [
       { "matcher": "*",
-        "hooks": [{ "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/hora-local.py\"" }] }
+        "hooks": [{ "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/Tools/hooks/hora-local.py\"" }] }
     ],
     "PostToolUse": [
       { "matcher": "Write|Edit",
-        "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/memoria-indice.sh\"" }] }
+        "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/Tools/hooks/memoria-indice.sh\"" }] }
     ],
     "PreCompact": [
-      { "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-log-guard.sh\"" }] }
+      { "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/Tools/hooks/session-log-guard.sh\"" }] }
     ],
     "SessionEnd": [
-      { "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-log-guard.sh\"" }] }
+      { "hooks": [{ "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/Tools/hooks/session-log-guard.sh\"" }] }
     ]
   }
 }

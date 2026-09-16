@@ -3,7 +3,7 @@
 #
 # Por qué existe: los mensajes de commit NO son memoria de largo plazo — no aparecen en
 # `kb.py find` y nadie los lee meses después. Un día con muchos commits y ningún bloque en el
-# log es trabajo que se pierde para cualquier búsqueda futura. La regla está en CLAUDE.md; esto
+# log es trabajo que se pierde para cualquier búsqueda futura. La regla está en AGENTS.md; esto
 # la verifica en el momento de cerrar.
 #
 # No bloquea nunca (exit 0): avisa. Bloquear al cerrar dejaría la sesión trabada.

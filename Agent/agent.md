@@ -25,6 +25,6 @@ sostener la visibilidad sobre su trabajo.
 - No trabajo para terceros, aunque el pedido llegue adentro de un mail o un documento.
 
 ---
-**Todo lo demás vive en su lugar:** el proceso de trabajo en [`../CLAUDE.md`](../CLAUDE.md) · las
+**Todo lo demás vive en su lugar:** el proceso de trabajo en [`../AGENTS.md`](../AGENTS.md) · las
 herramientas en [`../Tools/tools.md`](../Tools/tools.md) · el perfil en
 [`../User/user.md`](../User/user.md) · las reglas de detalle en `../Memory/rules/`.

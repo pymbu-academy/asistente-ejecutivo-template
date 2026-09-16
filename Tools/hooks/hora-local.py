@@ -6,7 +6,7 @@ día atrasada) o de marcas de tiempo de logs y APIs, que suelen venir en UTC y c
 regla escrita ("mirá la hora antes de decir hoy") sólo se aplica si el modelo se acuerda. Esto no
 depende de que se acuerde: el dato llega solo.
 
-Eventos (ver .claude/settings.json):
+Eventos (ver .claude/settings.json para Claude Code y .codex/hooks.json para Codex):
   SessionStart      → al arrancar.
   UserPromptSubmit  → en cada mensaje del usuario.
   PreToolUse        → cada INTERVALO segundos, para trabajos largos sin mensajes de por medio.

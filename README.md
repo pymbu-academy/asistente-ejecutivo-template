@@ -1,8 +1,8 @@
 # 🤖 Asistente Ejecutivo Personal
 
-Plantilla para tener tu **propio asistente ejecutivo** que vive en un repositorio, aprende sobre vos y tu trabajo, y mantiene una base de conocimiento que mejora con el tiempo. Funciona con **[Claude Code](https://www.anthropic.com/claude-code)**.
+Plantilla para tener tu **propio asistente ejecutivo** que vive en un repositorio, aprende sobre vos y tu trabajo, y mantiene una base de conocimiento que mejora con el tiempo. Funciona con **[Claude Code](https://www.anthropic.com/claude-code)** y con **[Codex](https://developers.openai.com/codex)**: las mismas instrucciones, la misma memoria y los mismos hooks sirven para los dos.
 
-No es una sesión común de Claude Code que olvida todo al cerrar. Es un asistente con **memoria persistente**: cada sesión deja registro, el conocimiento se acumula en un wiki versionado en git, y **la memoria no se degrada cuando crece**: el asistente busca lo que necesita en vez de cargarlo todo.
+No es una sesión común de un agente que olvida todo al cerrar. Es un asistente con **memoria persistente**: cada sesión deja registro, el conocimiento se acumula en un wiki versionado en git, y **la memoria no se degrada cuando crece**: el asistente busca lo que necesita en vez de cargarlo todo.
 
 ---
 
@@ -45,7 +45,7 @@ Necesitás tener instalado/creado esto. Todo es gratis:
 | **Git** | Clonar tu repo a la computadora | [git-scm.com/downloads](https://git-scm.com/downloads) |
 | **Node.js 18+** | Instalar las skills y el CLI de Google (`setup.sh`) | [nodejs.org](https://nodejs.org) (versión LTS) |
 | **Python 3** | El buscador de la memoria y el reloj | En Mac: `xcode-select --install` · [python.org](https://www.python.org/downloads/) |
-| **Claude Code** | El asistente en sí | [anthropic.com/claude-code](https://www.anthropic.com/claude-code) |
+| **Claude Code** o **Codex** | El asistente en sí (uno de los dos, o ambos) | [Claude Code](https://www.anthropic.com/claude-code) · [Codex](https://developers.openai.com/codex) |
 
 **Opcional (recomendado):**
 | Requisito | Para qué |
@@ -54,7 +54,7 @@ Necesitás tener instalado/creado esto. Todo es gratis:
 
 > 💡 Si no sabés si los tenés, abrí una terminal y probá: `git --version`, `node --version` y `python3 --version`. Si responden con un número, ya están.
 >
-> Claude Code necesita una cuenta de Claude con un plan que lo incluya. Usala **con tu propia cuenta**: es tu asistente personal.
+> Claude Code necesita una cuenta de Claude con un plan que lo incluya; Codex, una cuenta de ChatGPT. Usalo **con tu propia cuenta**: es tu asistente personal.
 
 ## 🚀 Cómo empezar (5 minutos)
 
@@ -64,7 +64,7 @@ Necesitás tener instalado/creado esto. Todo es gratis:
    git clone https://github.com/TU-USUARIO/TU-REPO.git
    cd TU-REPO
    ```
-3. **Instalá Claude Code** (si no lo tenés): https://www.anthropic.com/claude-code
+3. **Instalá tu agente** (si no lo tenés): [Claude Code](https://www.anthropic.com/claude-code) o [Codex](https://developers.openai.com/codex)
 4. **Instalá las herramientas base** (skills, Google Workspace y el enlace de la memoria):
    ```bash
    bash setup.sh
@@ -76,25 +76,29 @@ Necesitás tener instalado/creado esto. Todo es gratis:
    cp .mcp.json.example .mcp.json  # tus conexiones MCP (toman los tokens del .env)
    ```
    Pegá tus credenciales en el `.env`. Ver detalle en [`Tools/tools.md`](Tools/tools.md).
-6. **Abrí Claude Code** en la carpeta (con `claude`) y escribí:
+6. **Abrí tu agente** en la carpeta (`claude` o `codex`) y escribí:
    > *Hola, es mi primera vez con este asistente.*
 
    El asistente va a **entrevistarte** y configurar todo solo (tu perfil, su personalidad, tu base de conocimiento). No tenés que editar archivos a mano. También te va a pedir **un par de muestras de tu escritura** (un post, un email) para que después redacte **con tu voz** — quedan en `Memory/reference/mi-voz.md`.
 
-   > Tus conexiones MCP toman las credenciales del `.env` solas (vía el helper `with-env.sh`). **Arrancás con `claude` normal, sin wrapper ni paso extra.**
+   > Tus conexiones MCP toman las credenciales del `.env` solas (vía el helper `with-env.sh`). **Arrancás con `claude` o `codex` normal, sin wrapper ni paso extra.**
+
+   > **Con Codex, dos pasos la primera vez:** aceptá **confiar en la carpeta** cuando te lo pregunte, y abrí **`/hooks`** para aprobar los hooks del asistente. Sin eso, Codex ignora la configuración del repo y los hooks no corren.
 
 ## 🗂️ Cómo está organizado
 ```
-├── CLAUDE.md          ← Las reglas del asistente
+├── AGENTS.md          ← Las reglas del asistente (las lee Codex)
+├── CLAUDE.md          ← Importa AGENTS.md (lo lee Claude Code)
 ├── User/user.md       ← Tu perfil
 ├── Agent/agent.md     ← Cómo se comporta
 ├── Agent/memory/      ← Lo que aprende (versionado)
-├── Tools/             ← Herramientas conectadas + el buscador (kb/kb.py)
+├── Tools/             ← Herramientas, el buscador (kb/kb.py) y los hooks (hooks/)
 ├── Projects/          ← Apps, scripts, dashboards y material que crees
 ├── Memory/            ← La base de conocimiento (wiki + log de sesiones)
-└── .claude/hooks/     ← Lo que corre solo: git pull, hora, guardas
+├── .claude/settings.json  ← declara los hooks para Claude Code
+└── .codex/hooks.json      ← declara los mismos hooks para Codex
 ```
-Más detalle en [`CLAUDE.md`](CLAUDE.md) y, sobre el wiki, en [`Memory/schema.md`](Memory/schema.md).
+Más detalle en [`AGENTS.md`](AGENTS.md) y, sobre el wiki, en [`Memory/schema.md`](Memory/schema.md).
 
 ## 🔌 Herramientas opcionales
 El asistente es más útil cuanto más conectás. Algunas ideas (ver [`Tools/tools.md`](Tools/tools.md)):

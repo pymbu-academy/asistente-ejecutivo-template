@@ -1,9 +1,9 @@
 ---
 type: Rule
 title: "Proceso de sesión — el arranque, el registro y el cierre"
-description: "Formato del log de sesión, qué se actualiza después de cada bloque de trabajo, y el checklist de cierre. El CLAUDE.md dice CUÁNDO; esto dice CÓMO."
+description: "Formato del log de sesión, qué se actualiza después de cada bloque de trabajo, cómo se escribe una memoria, y el checklist de cierre. El AGENTS.md dice CUÁNDO; esto dice CÓMO."
 tags: [asistente, sesion, memoria]
-aliases: [proceso de sesion, como escribir la sesion, bloque de sesion, checklist de cierre, destilacion, como cerrar la sesion]
+aliases: [proceso de sesion, como escribir la sesion, bloque de sesion, checklist de cierre, destilacion, como cerrar la sesion, como escribir una memoria, formato de memoria]
 durable: true
 status: stable
 generated: { by: claude-code, at: 2026-09-16T00:00:00Z }
@@ -11,7 +11,7 @@ generated: { by: claude-code, at: 2026-09-16T00:00:00Z }
 
 # Proceso de sesión
 
-El [`CLAUDE.md`](../../CLAUDE.md) se carga siempre y dice **cuándo** pasa cada cosa. Este archivo
+El [`AGENTS.md`](../../AGENTS.md) se carga siempre y dice **cuándo** pasa cada cosa. Este archivo
 tiene el **cómo**, y se busca cuando toca hacerlo.
 
 ## 1. El archivo del día
@@ -25,7 +25,7 @@ title: "Sesión YYYY-MM-DD"
 description: "<una línea con lo principal del día>"
 tags: [sesion]
 status: stable
-generated: { by: claude-code, at: YYYY-MM-DDTHH:MM:SSZ }
+generated: { by: <claude-code | codex>, at: YYYY-MM-DDTHH:MM:SSZ }
 ---
 ```
 
@@ -64,13 +64,30 @@ Al tocar una página:
 
 ### Memorias del asistente (`Agent/memory/`)
 
-Claude Code guarda ahí lo que aprende (errores, preferencias, decisiones). `setup.sh` enlaza esa
-carpeta al repo para que se versione.
+Lo que el asistente **aprendió y no tiene que repetir**: un error que ya pasó, una preferencia del
+usuario, una decisión con su motivo. Es distinto del wiki: el wiki dice cómo está el negocio; la
+memoria, en qué ya se equivocó el asistente.
 
-- **`feedback`** (método, reglas, errores que no hay que repetir) → **sí** va con una línea en
-  `MEMORY.md`: su valor es aparecer sin que nadie la busque.
-- **`reference` / `project`** (datos de una herramienta o un proyecto) → **no** hace falta línea:
-  se recuperan con `kb.py find`.
+- **Claude Code** las escribe solo en su carpeta de memoria, que `setup.sh` enlaza a `Agent/memory/`.
+- **Codex** no: su memoria automática vive fuera del repo. En Codex se escriben **a mano**, con este
+  formato — un archivo por memoria:
+
+```markdown
+---
+name: <slug-en-kebab-case>
+description: <una línea: de qué trata, para decidir si es relevante>
+metadata:
+  type: feedback | user | project | reference
+  modified: YYYY-MM-DD
+---
+
+<el hecho>. **Por qué:** <el caso que lo originó>. **Cómo aplicarlo:** <cuándo se dispara>.
+```
+
+- **`feedback`** (método, reglas, errores que no hay que repetir) → **sí** lleva una línea en
+  `MEMORY.md`, en su sección: su valor es aparecer sin que nadie la busque.
+- **`reference` / `project`** (datos de una herramienta o un proyecto) → **no** hace falta línea: se
+  recuperan con `kb.py find`.
 - El hook `memoria-indice.sh` mantiene el índice debajo de las 200 líneas. No hay que avisarle al
   usuario: es higiene automática.
 

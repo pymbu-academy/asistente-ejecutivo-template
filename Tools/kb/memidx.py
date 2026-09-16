@@ -3,8 +3,7 @@
 
 EL PROBLEMA QUE RESUELVE
 ------------------------
-Claude Code le pide a cada sesión que, al escribir una memoria, agregue un puntero de una línea
-en MEMORY.md. Pero el índice se carga entero al arrancar y se lee hasta ~200 líneas: pasado eso
+Cada memoria nueva de método agrega un puntero de una línea en MEMORY.md. Pero el índice se carga entero al arrancar y se lee hasta ~200 líneas: pasado eso
 se corta EN SILENCIO y se pierden las memorias del final. Con decenas de memorias nuevas por
 semana, "una línea por memoria" contra un tope fijo termina desbordando. Un aviso no arregla una
 tasa de crecimiento: hace falta un mecanismo.

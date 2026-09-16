@@ -29,26 +29,29 @@ else
 fi
 echo
 
-# 1.c Memoria del asistente: enlazarla al repo para que se versione con git
-azul "▶ Enlazando la memoria del asistente al repo…"
-chmod +x .claude/hooks/* Tools/enlazar-memoria.sh with-env.sh 2>/dev/null || true
-bash Tools/enlazar-memoria.sh || amar "⚠ No se pudo enlazar la memoria. Reintentá con: bash Tools/enlazar-memoria.sh"
+# 1.c Memoria del asistente: con Claude Code se enlaza al repo para que se versione con git.
+#     (Codex no la necesita: ahí la memoria se escribe directo en Agent/memory/.)
+chmod +x Tools/hooks/* Tools/*.sh with-env.sh 2>/dev/null || true
+if command -v claude >/dev/null 2>&1 || [ -d "$HOME/.claude" ]; then
+  azul "▶ Enlazando la memoria de Claude Code al repo…"
+  bash Tools/enlazar-memoria.sh || amar "⚠ No se pudo enlazar la memoria. Reintentá con: bash Tools/enlazar-memoria.sh"
+else
+  amar "  (No encontré Claude Code: salteo el enlace de su memoria. Si lo instalás, corré bash Tools/enlazar-memoria.sh)"
+fi
 if command -v python3 >/dev/null 2>&1; then
   python3 Tools/kb/kb.py index --write >/dev/null 2>&1 && verde "✓ Índice de la base de conocimiento generado"
 fi
 
 # 2. Skills (capacidades reutilizables) desde skills-lock.json
-azul "▶ Instalando skills en .claude/skills/ … (puede tardar 1-2 min)"
+azul "▶ Instalando skills para Claude Code y Codex … (puede tardar 1-2 min)"
 if [ -f skills-lock.json ]; then
   # experimental_install restaura desde el lock, pero las deja en .agents/skills/
   npx --yes skills experimental_install || amar "⚠ experimental_install falló; reintentá manualmente."
-  # Claude Code busca las skills en .claude/skills/ → moverlas ahí y limpiar .agents/.
+  # Codex lee las skills de .agents/skills/ y Claude Code de .claude/skills/: se dejan en las dos.
   if [ -d .agents/skills ]; then
-    mkdir -p .claude/skills
-    cp -R .agents/skills/. .claude/skills/
-    rm -rf .agents                      # no dejar residuos: solo .claude/ para Claude Code
-    n=$(find .claude/skills -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ')
-    verde "✓ ${n} skills disponibles en .claude/skills/"
+    bash Tools/sincronizar-skills.sh
+    n=$(find .agents/skills -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d ' ')
+    verde "✓ ${n} skills disponibles para Claude Code (.claude/skills) y Codex (.agents/skills)"
   else
     amar "⚠ No se encontró .agents/skills tras la instalación. Revisá el paso de skills."
   fi
@@ -106,4 +109,5 @@ else
 fi
 echo
 verde "✓ Setup base completo."
-azul  "  Abrí Claude Code en esta carpeta y escribí: \"es mi primera vez\"."
+azul  "  Abrí Claude Code (claude) o Codex (codex) en esta carpeta y escribí: \"es mi primera vez\"."
+azul  "  Con Codex: aceptá confiar en la carpeta y aprobá los hooks con /hooks."

@@ -1,6 +1,6 @@
 {
   "_comentario": [
-    "PLANTILLA de conexiones MCP. Copiala a '.mcp.json' (cp .mcp.json.example .mcp.json) y dejá solo los servers que uses.",
+    "PLANTILLA de conexiones MCP para Claude Code (Codex usa .codex/config.toml.example). Copiala a '.mcp.json' (cp .mcp.json.example .mcp.json) y dejá solo los servers que uses.",
     "REGLA DE ORO: NUNCA escribas un token acá. Los tokens van en el archivo .env.",
     "Cada server usa './with-env.sh' como 'command': ese helper carga tu .env y arranca el server, así toma sus credenciales solo.",
     "Vos arrancás con 'claude' normal — no tenés que correr nada especial.",

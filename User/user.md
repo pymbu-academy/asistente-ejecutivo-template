@@ -8,6 +8,7 @@
 - **Rol / título:** {{ROL}}
 - **A qué me dedico:** {{PROFESION_O_EMPRESA}}
 - **Ubicación:** {{UBICACION}}  ·  la hora la toma el asistente de tu computadora
+- **Agente:** {{CLAUDE_CODE / CODEX / LOS DOS}}
 
 ## Mi trabajo / empresa
 - **Qué hago:** {{DESCRIPCION_NEGOCIO}}

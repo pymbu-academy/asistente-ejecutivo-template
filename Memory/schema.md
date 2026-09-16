@@ -28,7 +28,7 @@ Este archivo no repite la spec: define las decisiones que OKF deja abiertas.
 | Formato de los documentos, frontmatter, links, `index.md` | la spec de OKF |
 | Qué `type` usamos, qué carpetas, cuándo algo es obsoleto | este archivo |
 | Presupuesto de contexto y cómo se busca | este archivo, §5 y §6 |
-| Proceso de trabajo (git, secretos, idioma) | [../CLAUDE.md](../CLAUDE.md) |
+| Proceso de trabajo (git, secretos, idioma) | [../AGENTS.md](../AGENTS.md) |
 
 Ante un conflicto con la spec, **gana la spec** y se corrige este archivo.
 
@@ -77,7 +77,7 @@ Obligatorio: `type`. Recomendado siempre: `title`, `description`, `tags`, `alias
 - **Footnotes** — el label es la clave de unión contra `sources[].id`. Dos fuentes no comparten
   `id`.
 
-Actores en `generated.by` y `verified.by`: `claude-code` (con versión cuando se sabe),
+Actores en `generated.by` y `verified.by`: `claude-code` o `codex` (con versión cuando se sabe),
 `human:<usuario>`, `process:<rutina>`.
 
 ### Proyectos
@@ -90,9 +90,9 @@ dónde está, qué documentos tiene—, no una copia de su documentación.
 
 > **Lo que se carga al iniciar una sesión no supera ~25.000 tokens.**
 
-Entra solo: `CLAUDE.md`, `User/user.md`, `Agent/agent.md`, `Tools/tools.md`, `Memory/index.md`,
-**y dos cosas que el repo no controla**: el índice de la auto-memoria (`Agent/memory/MEMORY.md`) y
-las descripciones de las skills instaladas. `python3 Tools/kb/kb.py budget` mide las siete.
+Entra solo: `AGENTS.md` (y `CLAUDE.md`, que lo importa), `User/user.md`, `Agent/agent.md`,
+`Tools/tools.md`, `Memory/index.md`, el índice de memorias (`Agent/memory/MEMORY.md`) y las
+descripciones de las skills instaladas. `python3 Tools/kb/kb.py budget` los mide todos.
 
 Nada más entra solo. Todo lo demás **se busca**.
 

@@ -1,0 +1,8 @@
+# PLANTILLA de configuración de Codex para este repo.
+# Copiala a .codex/config.toml (cp .codex/config.toml.example .codex/config.toml) y dejá sólo lo que uses.
+# REGLA DE ORO: NUNCA escribas un token acá. Los tokens van en el archivo .env.
+# Codex sólo lee este archivo si confiaste en la carpeta. Los hooks NO van acá: están en .codex/hooks.json.
+
+# [mcp_servers.github]
+# command = "bash"
+# args = ["-c", "exec \"$(git rev-parse --show-toplevel)/with-env.sh\" npx -y @modelcontextprotocol/server-github"]

@@ -1,18 +1,18 @@
 # Secretos y configuración local — NUNCA se suben al repo
 # (los comentarios van en su PROPIA línea: un # al lado del patrón rompe el patrón)
-# .env       = TODAS tus credenciales (tokens, API keys, secrets)
-# .mcp.json  = conexiones MCP locales (toman los tokens del .env, sin secretos adentro)
+# .env                = TODAS tus credenciales (tokens, API keys, secrets)
+# .mcp.json           = conexiones MCP de Claude Code (toman los tokens del .env)
+# .codex/config.toml  = configuración local de Codex, incluidos sus MCP
 .env
 .mcp.json
+.codex/config.toml
 
-# .claude/: se versionan los hooks y su configuración (son parte del asistente).
-# Las skills instaladas y los permisos locales NO: las skills las reinstala setup.sh.
+# .claude/: se versiona settings.json (declara los hooks). Las skills instaladas y los permisos
+# locales NO: las skills las reinstala setup.sh.
 .claude/*
 !.claude/settings.json
-!.claude/hooks/
-.claude/settings.local.json
 
-# Residuo de instalación de skills (setup.sh las mueve a .claude/skills)
+# Skills instaladas para Codex (las reinstala setup.sh; se sincronizan con .claude/skills)
 .agents/
 
 # Sistema y dependencias

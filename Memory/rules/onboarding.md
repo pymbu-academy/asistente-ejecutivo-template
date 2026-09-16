@@ -28,6 +28,7 @@ trabajo, y mantiene una base de conocimiento que mejora con el tiempo.
 - **Herramientas que usa:** Google Workspace, Notion, Excel, CRM, redes.
 - **Cómo quiere que lo traten:** idioma, tono, nivel de detalle, y **qué acciones requieren su
   confirmación** (enviar mails, gastar, publicar).
+- **Con qué agente trabaja:** Claude Code, Codex o los dos. Se anota en `User/user.md`.
 
 ## 3. Completar los archivos mientras responde
 
@@ -41,8 +42,10 @@ trabajo, y mantiene una base de conocimiento que mejora con el tiempo.
 
 ## 4. Verificar la instalación
 
-- **`bash setup.sh`** — si no se corrió: instala las skills y enlaza la memoria del asistente al repo.
-  `python3 Tools/kb/kb.py lint` lo confirma en el chequeo 9.
+- **`bash setup.sh`** — si no se corrió: instala las skills para los dos agentes y, si hay Claude Code,
+  enlaza su memoria al repo. `python3 Tools/kb/kb.py lint` lo confirma en el chequeo 9.
+- **Si usa Codex:** que haya aceptado confiar en la carpeta y aprobado los hooks con `/hooks`. Sin
+  eso no corren: la hora no llega y no hay aviso al cerrar.
 - **La hora:** el hook toma la zona de la computadora. Confirmar con el usuario que la hora que se
   inyecta es la suya.
 - **Google Workspace es opcional.** Antes de mandarlo al login, `command -v gws`:

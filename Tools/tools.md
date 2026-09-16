@@ -8,14 +8,15 @@
 | Herramienta | Para qué | Ficha |
 |---|---|---|
 | **`Tools/kb/kb.py`** | Buscar en la base de conocimiento (`find`, `show`), regenerar el índice (`index --write`), validar (`lint`) y medir el arranque (`budget`) | [../Memory/schema.md](../Memory/schema.md) |
-| **Hooks** (`.claude/hooks/`) | Solos: `git pull` al arrancar · hora real en el contexto · aviso si el trabajo del día no quedó escrito · índice de memorias bajo el tope | [../Memory/rules/proceso-de-sesion.md](../Memory/rules/proceso-de-sesion.md) |
+| **Hooks** (`Tools/hooks/`) | Solos: `git pull` al arrancar · hora real en el contexto · aviso si el trabajo del día no quedó escrito · índice de memorias bajo el tope | [../Memory/rules/proceso-de-sesion.md](../Memory/rules/proceso-de-sesion.md) |
 | **`with-env.sh`** | Correr cualquier comando con las credenciales del `.env` | [mcp.md](mcp.md) |
+| **`Tools/sincronizar-skills.sh`** | Dejar las mismas skills para Claude Code (`.claude/skills`) y Codex (`.agents/skills`). Lo corre el hook de arranque | |
 
 ## Incluidas en la plantilla (`bash setup.sh`)
 
 | Herramienta | Para qué | Nota |
 |---|---|---|
-| **`find-skills`** · **`skill-creator`** | Encontrar e instalar skills existentes · crear skills propias para procesos que se repiten | ver `CLAUDE.md` |
+| **`find-skills`** · **`skill-creator`** | Encontrar e instalar skills existentes · crear skills propias para procesos que se repiten | ver `AGENTS.md` |
 | Google Workspace CLI (`gws`) + skills `gws-*` | Gmail, Drive, Sheets, Calendar, Docs, Tasks | [gws.md](gws.md) · requiere tu login de Google |
 | Office: `pdf` · `docx` · `xlsx` · `pptx` | Crear, leer y editar PDF, Word, Excel y PowerPoint | archivos locales, sin cuentas |
 | Marketing: `copywriting` · `social-content` | Copy persuasivo y contenido para redes | |
@@ -27,7 +28,8 @@
 
 ```bash
 npx skills find <query>                              # buscar
-npx skills add owner/repo@skill -a claude-code -y    # instalar EN EL REPO (nunca global)
+npx skills add owner/repo@skill -a claude-code -y    # instalar EN EL REPO (nunca global); con Codex: -a codex
+bash Tools/sincronizar-skills.sh                      # que la tengan los dos agentes
 npx skills list                                      # listar instaladas
 ```
 Catálogo: https://skills.sh
