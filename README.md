@@ -58,7 +58,7 @@ Necesitás tener instalado/creado esto. Todo es gratis:
 
 ## 🚀 Cómo empezar (5 minutos)
 
-1. **Creá tu copia.** Clic en **"Use this template" → "Create a new repository"** (arriba a la derecha). Vas a tener tu propio repo, limpio y privado.
+1. **Creá tu copia.** Clic en **"Use this template" → "Create a new repository"** (arriba a la derecha). 🔒 **Elegí _Private_**: ahí van a quedar datos tuyos y de tu negocio.
 2. **Cloná tu repo** en tu computadora:
    ```bash
    git clone https://github.com/TU-USUARIO/TU-REPO.git
@@ -73,9 +73,10 @@ Necesitás tener instalado/creado esto. Todo es gratis:
 5. **Configurá tus secretos** *(solo si vas a conectar servicios por MCP — GitHub, Notion, etc.)*:
    ```bash
    cp .env.example .env            # tus tokens/API keys (NUNCA se sube al repo)
-   cp .mcp.json.example .mcp.json  # tus conexiones MCP (toman los tokens del .env)
+   cp .mcp.json.example .mcp.json  # conexiones MCP para Claude Code (toman los tokens del .env)
+   cp .codex/config.toml.example .codex/config.toml   # lo mismo, para Codex
    ```
-   Pegá tus credenciales en el `.env`. Ver detalle en [`Tools/tools.md`](Tools/tools.md).
+   Pegá tus credenciales en el `.env`. Ver detalle en [`Tools/mcp.md`](Tools/mcp.md).
 6. **Abrí tu agente** en la carpeta (`claude` o `codex`) y escribí:
    > *Hola, es mi primera vez con este asistente.*
 
